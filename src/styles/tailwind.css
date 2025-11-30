@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color definitions */
+  --color-tc-primary: #3eaf7c;
+  --color-tc-secondary: #226ce0;
+  --color-tc-accent: #f9db5c;
+  --color-tc-background: #ffffff;
+  --color-tc-surface: #f3f4f6;
+  --color-tc-error: #f44336;
+  --color-tc-info: #2196f3;
+  --color-tc-success: #4caf50;
+  --color-tc-warning: #ff9800;
+
+  /* Dark mode colors */
+  --color-tc-primary-dark: #3eaf7c;
+  --color-tc-secondary-dark: #226ce0;
+  --color-tc-accent-dark: #f9db5c;
+  --color-tc-background-dark: #01181c;
+  --color-tc-surface-dark: #02292e;
+  --color-tc-error-dark: #ef5350;
+  --color-tc-info-dark: #64b5f6;
+  --color-tc-success-dark: #81c784;
+  --color-tc-warning-dark: #ffb74d;
+
+  /* Screen breakpoints */
+  --breakpoint-xs: 599px;
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 960px;
+  --breakpoint-lg: 1280px;
+  --breakpoint-xl: 1920px;
+  --breakpoint-2xl: 2560px;
+}
+
+@utility container {
+  max-width: none;
+}
+
+/* Dark mode variant */
+@variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));

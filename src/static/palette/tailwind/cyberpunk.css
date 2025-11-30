@@ -1,0 +1,67 @@
+:root {
+  /* light cyberpunk */
+  --color-cyberpunk-light-background: #0a0a0a;
+  --color-cyberpunk-light-surface: #1a1a1a;
+  --color-cyberpunk-light-surface-bright: #2a2a2a;
+  --color-cyberpunk-light-surface-light: #141414;
+  --color-cyberpunk-light-surface-variant: #00ffff;
+  --color-cyberpunk-light-on-surface-variant: #0a0a0a;
+  --color-cyberpunk-light-primary: #ff00ff;
+  --color-cyberpunk-light-primary-darken-1: #e600e6;
+  --color-cyberpunk-light-secondary: #00ffff;
+  --color-cyberpunk-light-secondary-darken-1: #00e6e6;
+  --color-cyberpunk-light-error: #ff0033;
+  --color-cyberpunk-light-info: #00ffcc;
+  --color-cyberpunk-light-success: #00ff00;
+  --color-cyberpunk-light-warning: #ffff00; /* dark cyberpunk */
+  --color-cyberpunk-dark-background: #000000;
+  --color-cyberpunk-dark-surface: #0f0f0f;
+  --color-cyberpunk-dark-surface-bright: #1f1f1f;
+  --color-cyberpunk-dark-surface-light: #0a0a0a;
+  --color-cyberpunk-dark-surface-variant: #ff00ff;
+  --color-cyberpunk-dark-on-surface-variant: #000000;
+  --color-cyberpunk-dark-primary: #00ffff;
+  --color-cyberpunk-dark-primary-darken-1: #00e6e6;
+  --color-cyberpunk-dark-secondary: #ff00ff;
+  --color-cyberpunk-dark-secondary-darken-1: #e600e6;
+  --color-cyberpunk-dark-error: #ff3366;
+  --color-cyberpunk-dark-info: #33ffdd;
+  --color-cyberpunk-dark-success: #33ff33;
+  --color-cyberpunk-dark-warning: #ffff33;
+}
+.theme-cyberpunk-light {
+  --color-tw-background: var(--color-cyberpunk-light-background);
+  --color-tw-surface: var(--color-cyberpunk-light-surface);
+  --color-tw-surface-bright: var(--color-cyberpunk-light-surface-bright);
+  --color-tw-surface-light: var(--color-cyberpunk-light-surface-light);
+  --color-tw-surface-variant: var(--color-cyberpunk-light-surface-variant);
+  --color-tw-on-surface-variant: var(
+    --color-cyberpunk-light-on-surface-variant
+  );
+  --color-tw-primary: var(--color-cyberpunk-light-primary);
+  --color-tw-primary-darken-1: var(--color-cyberpunk-light-primary-darken-1);
+  --color-tw-secondary: var(--color-cyberpunk-light-secondary);
+  --color-tw-secondary-darken-1: var(
+    --color-cyberpunk-light-secondary-darken-1
+  );
+  --color-tw-error: var(--color-cyberpunk-light-error);
+  --color-tw-info: var(--color-cyberpunk-light-info);
+  --color-tw-success: var(--color-cyberpunk-light-success);
+  --color-tw-warning: var(--color-cyberpunk-light-warning);
+}
+.theme-cyberpunk-dark {
+  --color-tw-background: var(--color-cyberpunk-dark-background);
+  --color-tw-surface: var(--color-cyberpunk-dark-surface);
+  --color-tw-surface-bright: var(--color-cyberpunk-dark-surface-bright);
+  --color-tw-surface-dark: var(--color-cyberpunk-dark-surface-dark);
+  --color-tw-surface-variant: var(--color-cyberpunk-dark-surface-variant);
+  --color-tw-on-surface-variant: var(--color-cyberpunk-dark-on-surface-variant);
+  --color-tw-primary: var(--color-cyberpunk-dark-primary);
+  --color-tw-primary-darken-1: var(--color-cyberpunk-dark-primary-darken-1);
+  --color-tw-secondary: var(--color-cyberpunk-dark-secondary);
+  --color-tw-secondary-darken-1: var(--color-cyberpunk-dark-secondary-darken-1);
+  --color-tw-error: var(--color-cyberpunk-dark-error);
+  --color-tw-info: var(--color-cyberpunk-dark-info);
+  --color-tw-success: var(--color-cyberpunk-dark-success);
+  --color-tw-warning: var(--color-cyberpunk-dark-warning);
+}

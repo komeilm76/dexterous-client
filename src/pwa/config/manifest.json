@@ -1,0 +1,65 @@
+{
+  "name": "Dexterous Client",
+  "short_name": "Dexterous Client",
+  "description": "Dexterous Client Application",
+  "file_handlers": [],
+  "orientation": "any",
+  "display": "standalone",
+  "display_override": [],
+  "background_color": "#078af7",
+  "theme_color": "#078af7",
+  "dir": "ltr",
+  "lang": "en",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "protocol_handlers": [],
+  "shortcuts": [],
+  "categories": [],
+  "iarc_rating_id": "",
+  "share_target": {
+    "action": "",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {}
+  },
+  "scope_extensions": [],
+  "id": "/?source=pwa",
+  "icons": [
+    {
+      "src": "/src/assets/media/pwa/logo.png",
+      "type": "image/png",
+      "sizes": "1024x1024"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/src/assets/media/pwa/Screenshot-376x320.png",
+      "sizes": "376x320",
+      "form_factor": "wide",
+      "type": "image/png"
+    },
+    {
+      "src": "/src/assets/media/pwa/screencapture-1170x2532_1.png",
+      "sizes": "1170x2532",
+      "form_factor": "narrow",
+      "type": "image/png"
+    },
+    {
+      "src": "/src/assets/media/pwa/screencapture-1170x2532_2.png",
+      "sizes": "1170x2532",
+      "form_factor": "narrow",
+      "type": "image/png"
+    },
+    {
+      "src": "/src/assets/media/pwa/screencapture-1170x2532_3.png",
+      "sizes": "1170x2532",
+      "form_factor": "narrow",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  }
+}

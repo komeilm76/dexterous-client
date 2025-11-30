@@ -1,0 +1,17 @@
+/* @import "tailwindcss"; */
+@import "../../micro/palette/dist/tailwind.css";
+
+/* @theme {
+  --breakpoint-xs: 599px;
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 960px;
+  --breakpoint-lg: 1280px;
+  --breakpoint-xl: 1920px;
+  --breakpoint-2xl: 2560px;
+} */
+/* @utility container {
+  max-width: none;
+} */
+
+/* Dark mode variant */
+/* @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *)); */

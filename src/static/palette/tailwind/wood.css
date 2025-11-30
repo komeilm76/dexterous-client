@@ -1,0 +1,63 @@
+:root {
+  /* light wood */
+  --color-wood-light-background: #f5e8d0;
+  --color-wood-light-surface: #e8d5b5;
+  --color-wood-light-surface-bright: #f8edd8;
+  --color-wood-light-surface-light: #dbc9a8;
+  --color-wood-light-surface-variant: #8b7355;
+  --color-wood-light-on-surface-variant: #f5e8d0;
+  --color-wood-light-primary: #8b7355;
+  --color-wood-light-primary-darken-1: #7a6245;
+  --color-wood-light-secondary: #a78a6d;
+  --color-wood-light-secondary-darken-1: #957857;
+  --color-wood-light-error: #c44536;
+  --color-wood-light-info: #4a6572;
+  --color-wood-light-success: #556b2f;
+  --color-wood-light-warning: #b8860b; /* dark wood */
+  --color-wood-dark-background: #2c2416;
+  --color-wood-dark-surface: #3e3220;
+  --color-wood-dark-surface-bright: #4f412b;
+  --color-wood-dark-surface-light: #352a1a;
+  --color-wood-dark-surface-variant: #d4b896;
+  --color-wood-dark-on-surface-variant: #2c2416;
+  --color-wood-dark-primary: #d4b896;
+  --color-wood-dark-primary-darken-1: #c4a886;
+  --color-wood-dark-secondary: #b89a76;
+  --color-wood-dark-secondary-darken-1: #a88a66;
+  --color-wood-dark-error: #e27d6a;
+  --color-wood-dark-info: #6b8b9a;
+  --color-wood-dark-success: #7a8b4f;
+  --color-wood-dark-warning: #e8b854;
+}
+.theme-wood-light {
+  --color-tw-background: var(--color-wood-light-background);
+  --color-tw-surface: var(--color-wood-light-surface);
+  --color-tw-surface-bright: var(--color-wood-light-surface-bright);
+  --color-tw-surface-light: var(--color-wood-light-surface-light);
+  --color-tw-surface-variant: var(--color-wood-light-surface-variant);
+  --color-tw-on-surface-variant: var(--color-wood-light-on-surface-variant);
+  --color-tw-primary: var(--color-wood-light-primary);
+  --color-tw-primary-darken-1: var(--color-wood-light-primary-darken-1);
+  --color-tw-secondary: var(--color-wood-light-secondary);
+  --color-tw-secondary-darken-1: var(--color-wood-light-secondary-darken-1);
+  --color-tw-error: var(--color-wood-light-error);
+  --color-tw-info: var(--color-wood-light-info);
+  --color-tw-success: var(--color-wood-light-success);
+  --color-tw-warning: var(--color-wood-light-warning);
+}
+.theme-wood-dark {
+  --color-tw-background: var(--color-wood-dark-background);
+  --color-tw-surface: var(--color-wood-dark-surface);
+  --color-tw-surface-bright: var(--color-wood-dark-surface-bright);
+  --color-tw-surface-dark: var(--color-wood-dark-surface-dark);
+  --color-tw-surface-variant: var(--color-wood-dark-surface-variant);
+  --color-tw-on-surface-variant: var(--color-wood-dark-on-surface-variant);
+  --color-tw-primary: var(--color-wood-dark-primary);
+  --color-tw-primary-darken-1: var(--color-wood-dark-primary-darken-1);
+  --color-tw-secondary: var(--color-wood-dark-secondary);
+  --color-tw-secondary-darken-1: var(--color-wood-dark-secondary-darken-1);
+  --color-tw-error: var(--color-wood-dark-error);
+  --color-tw-info: var(--color-wood-dark-info);
+  --color-tw-success: var(--color-wood-dark-success);
+  --color-tw-warning: var(--color-wood-dark-warning);
+}

@@ -1,0 +1,63 @@
+:root {
+  /* light neon */
+  --color-neon-light-background: #000000;
+  --color-neon-light-surface: #0a0a0a;
+  --color-neon-light-surface-bright: #1a1a1a;
+  --color-neon-light-surface-light: #141414;
+  --color-neon-light-surface-variant: #39ff14;
+  --color-neon-light-on-surface-variant: #000000;
+  --color-neon-light-primary: #ff073a;
+  --color-neon-light-primary-darken-1: #e6002e;
+  --color-neon-light-secondary: #00f7ff;
+  --color-neon-light-secondary-darken-1: #00dee6;
+  --color-neon-light-error: #ff0000;
+  --color-neon-light-info: #00ffff;
+  --color-neon-light-success: #00ff00;
+  --color-neon-light-warning: #ffff00; /* dark neon */
+  --color-neon-dark-background: #000000;
+  --color-neon-dark-surface: #0a0a0a;
+  --color-neon-dark-surface-bright: #1a1a1a;
+  --color-neon-dark-surface-light: #141414;
+  --color-neon-dark-surface-variant: #ff073a;
+  --color-neon-dark-on-surface-variant: #000000;
+  --color-neon-dark-primary: #39ff14;
+  --color-neon-dark-primary-darken-1: #2fe60a;
+  --color-neon-dark-secondary: #ff00ff;
+  --color-neon-dark-secondary-darken-1: #e600e6;
+  --color-neon-dark-error: #ff4444;
+  --color-neon-dark-info: #00ffff;
+  --color-neon-dark-success: #00ff00;
+  --color-neon-dark-warning: #ffff00;
+}
+.theme-neon-light {
+  --color-tw-background: var(--color-neon-light-background);
+  --color-tw-surface: var(--color-neon-light-surface);
+  --color-tw-surface-bright: var(--color-neon-light-surface-bright);
+  --color-tw-surface-light: var(--color-neon-light-surface-light);
+  --color-tw-surface-variant: var(--color-neon-light-surface-variant);
+  --color-tw-on-surface-variant: var(--color-neon-light-on-surface-variant);
+  --color-tw-primary: var(--color-neon-light-primary);
+  --color-tw-primary-darken-1: var(--color-neon-light-primary-darken-1);
+  --color-tw-secondary: var(--color-neon-light-secondary);
+  --color-tw-secondary-darken-1: var(--color-neon-light-secondary-darken-1);
+  --color-tw-error: var(--color-neon-light-error);
+  --color-tw-info: var(--color-neon-light-info);
+  --color-tw-success: var(--color-neon-light-success);
+  --color-tw-warning: var(--color-neon-light-warning);
+}
+.theme-neon-dark {
+  --color-tw-background: var(--color-neon-dark-background);
+  --color-tw-surface: var(--color-neon-dark-surface);
+  --color-tw-surface-bright: var(--color-neon-dark-surface-bright);
+  --color-tw-surface-dark: var(--color-neon-dark-surface-dark);
+  --color-tw-surface-variant: var(--color-neon-dark-surface-variant);
+  --color-tw-on-surface-variant: var(--color-neon-dark-on-surface-variant);
+  --color-tw-primary: var(--color-neon-dark-primary);
+  --color-tw-primary-darken-1: var(--color-neon-dark-primary-darken-1);
+  --color-tw-secondary: var(--color-neon-dark-secondary);
+  --color-tw-secondary-darken-1: var(--color-neon-dark-secondary-darken-1);
+  --color-tw-error: var(--color-neon-dark-error);
+  --color-tw-info: var(--color-neon-dark-info);
+  --color-tw-success: var(--color-neon-dark-success);
+  --color-tw-warning: var(--color-neon-dark-warning);
+}

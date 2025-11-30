@@ -1,0 +1,63 @@
+:root {
+  /* light hell */
+  --color-hell-light-background: #2c0000;
+  --color-hell-light-surface: #3d0000;
+  --color-hell-light-surface-bright: #4d0000;
+  --color-hell-light-surface-light: #260000;
+  --color-hell-light-surface-variant: #ff4500;
+  --color-hell-light-on-surface-variant: #2c0000;
+  --color-hell-light-primary: #ff4500;
+  --color-hell-light-primary-darken-1: #e63d00;
+  --color-hell-light-secondary: #dc143c;
+  --color-hell-light-secondary-darken-1: #c91434;
+  --color-hell-light-error: #ff0000;
+  --color-hell-light-info: #8b0000;
+  --color-hell-light-success: #800000;
+  --color-hell-light-warning: #ff8c00; /* dark hell */
+  --color-hell-dark-background: #0a0000;
+  --color-hell-dark-surface: #1a0000;
+  --color-hell-dark-surface-bright: #2a0000;
+  --color-hell-dark-surface-light: #140000;
+  --color-hell-dark-surface-variant: #ff6b6b;
+  --color-hell-dark-on-surface-variant: #0a0000;
+  --color-hell-dark-primary: #ff6b6b;
+  --color-hell-dark-primary-darken-1: #e85b5b;
+  --color-hell-dark-secondary: #ff4757;
+  --color-hell-dark-secondary-darken-1: #e83747;
+  --color-hell-dark-error: #ff4444;
+  --color-hell-dark-info: #cd5c5c;
+  --color-hell-dark-success: #b22222;
+  --color-hell-dark-warning: #ffa07a;
+}
+.theme-hell-light {
+  --color-tw-background: var(--color-hell-light-background);
+  --color-tw-surface: var(--color-hell-light-surface);
+  --color-tw-surface-bright: var(--color-hell-light-surface-bright);
+  --color-tw-surface-light: var(--color-hell-light-surface-light);
+  --color-tw-surface-variant: var(--color-hell-light-surface-variant);
+  --color-tw-on-surface-variant: var(--color-hell-light-on-surface-variant);
+  --color-tw-primary: var(--color-hell-light-primary);
+  --color-tw-primary-darken-1: var(--color-hell-light-primary-darken-1);
+  --color-tw-secondary: var(--color-hell-light-secondary);
+  --color-tw-secondary-darken-1: var(--color-hell-light-secondary-darken-1);
+  --color-tw-error: var(--color-hell-light-error);
+  --color-tw-info: var(--color-hell-light-info);
+  --color-tw-success: var(--color-hell-light-success);
+  --color-tw-warning: var(--color-hell-light-warning);
+}
+.theme-hell-dark {
+  --color-tw-background: var(--color-hell-dark-background);
+  --color-tw-surface: var(--color-hell-dark-surface);
+  --color-tw-surface-bright: var(--color-hell-dark-surface-bright);
+  --color-tw-surface-dark: var(--color-hell-dark-surface-dark);
+  --color-tw-surface-variant: var(--color-hell-dark-surface-variant);
+  --color-tw-on-surface-variant: var(--color-hell-dark-on-surface-variant);
+  --color-tw-primary: var(--color-hell-dark-primary);
+  --color-tw-primary-darken-1: var(--color-hell-dark-primary-darken-1);
+  --color-tw-secondary: var(--color-hell-dark-secondary);
+  --color-tw-secondary-darken-1: var(--color-hell-dark-secondary-darken-1);
+  --color-tw-error: var(--color-hell-dark-error);
+  --color-tw-info: var(--color-hell-dark-info);
+  --color-tw-success: var(--color-hell-dark-success);
+  --color-tw-warning: var(--color-hell-dark-warning);
+}

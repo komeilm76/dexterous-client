@@ -1,0 +1,78 @@
+{
+  "bumbleBee-dark": {
+    "colors": {
+      "background": "#000000",
+      "surface": "#1A1A00",
+      "surface-bright": "#2A2A00",
+      "surface-light": "#141400",
+      "surface-variant": "#FFFF00",
+      "on-surface-variant": "#000000",
+      "primary": "#FFFF00",
+      "primary-darken-1": "#E6E600",
+      "secondary": "#FFA500",
+      "secondary-darken-1": "#E69500",
+      "error": "#FF4444",
+      "info": "#4444FF",
+      "success": "#44CC44",
+      "warning": "#FFB833"
+    },
+    "dark": true
+  },
+  "bumbleBee-light": {
+    "colors": {
+      "background": "#FFFF00",
+      "surface": "#FFEF00",
+      "surface-bright": "#FFFF4D",
+      "surface-light": "#FFE600",
+      "surface-variant": "#000000",
+      "on-surface-variant": "#FFFF00",
+      "primary": "#000000",
+      "primary-darken-1": "#000000",
+      "secondary": "#FFA500",
+      "secondary-darken-1": "#E69500",
+      "error": "#FF0000",
+      "info": "#0000FF",
+      "success": "#008000",
+      "warning": "#FF8C00"
+    },
+    "dark": false
+  },
+  "winter-dark": {
+    "colors": {
+      "background": "#0A1F35",
+      "surface": "#1A2F45",
+      "surface-bright": "#2A3F55",
+      "surface-light": "#14273D",
+      "surface-variant": "#B0E0E6",
+      "on-surface-variant": "#0A1F35",
+      "primary": "#B0E0E6",
+      "primary-darken-1": "#9ED0D6",
+      "secondary": "#87CEEB",
+      "secondary-darken-1": "#78BAD6",
+      "error": "#6495ED",
+      "info": "#00CED1",
+      "success": "#48D1CC",
+      "warning": "#9370DB"
+    },
+    "dark": true
+  },
+  "winter-light": {
+    "colors": {
+      "background": "#F0F8FF",
+      "surface": "#E6F3FF",
+      "surface-bright": "#FFFFFF",
+      "surface-light": "#D4EBFF",
+      "surface-variant": "#4682B4",
+      "on-surface-variant": "#F0F8FF",
+      "primary": "#1E90FF",
+      "primary-darken-1": "#1A7FE6",
+      "secondary": "#87CEEB",
+      "secondary-darken-1": "#78BAD6",
+      "error": "#4169E1",
+      "info": "#00BFFF",
+      "success": "#20B2AA",
+      "warning": "#7B68EE"
+    },
+    "dark": false
+  }
+}

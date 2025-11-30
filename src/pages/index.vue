@@ -1,0 +1,60 @@
+<template>
+  <VContainer>
+    <VRow align="center" justify="center">
+      <VCol cols="6">
+        <div class="rounded-full !p-12 text-center text-6xl border-4 border-tw-primary text-tw-primary">
+          <span>Dexterous</span>
+          <i class="fa-duotone fa-solid fa-medal"></i>
+        </div>
+      </VCol>
+      <VCol cols="12">
+        <VSelect label="font" :items="setting.statics.fontList" v-model="setting.defaults.font" item-value="key"
+          item-title="name">
+        </VSelect>
+        <VSelect label="language" :items="setting.statics.languageList" v-model="setting.defaults.language"
+          item-value="key" item-title="name"></VSelect>
+
+        <VSelect label="theme" :items="setting.statics.themeModeList" v-model="setting.defaults.themeMode"
+          item-value="key" item-title="name"></VSelect>
+
+        <VSelect label="theme" :items="setting.statics.paletteList" v-model="setting.defaults.palette" item-value="key"
+          item-title="title"></VSelect>
+      </VCol>
+    </VRow>
+  </VContainer>
+</template>
+
+<script lang="ts" setup>
+import { useAppSetting } from '@/stores/application/setting';
+import _ from 'lodash';
+import { onMounted } from 'vue';
+const setting = useAppSetting();
+
+onMounted(() => {
+
+})
+
+</script>
+
+
+<style lang="scss">
+.box {
+  width: 300px;
+  height: 300px;
+  background-color: white;
+  overflow-y: auto;
+  direction: ltr;
+
+  .item {
+    color: black;
+  }
+}
+
+body[dir="rtl"] .box .item {
+  direction: rtl;
+}
+
+body[dir="ltr"] .box .item {
+  direction: ltr;
+}
+</style>
