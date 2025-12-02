@@ -15,18 +15,9 @@ import { createApp } from "vue";
 
 // Styles
 import "unfonts.css";
-import "km-icon/assets/fontawesome/v7/pro/imports/fontawesome.css";
-import "km-icon/assets/fontawesome/v7/pro/imports/all-family.css";
-import "km-icon/assets/fontawesome/v7/pro/imports/all-weight.css";
-import type { IPaletteType } from "./stores/application/setting/palette/types";
 
 const app = createApp(App);
-
-const palettes: Partial<Record<IPaletteType, boolean>> = {
-  bumbleBee: true,
-  chroma: true,
-};
-
+await plugins.icon.install();
 plugins.router.install(app);
 plugins.pinia.install(app);
 await plugins.tailwind.install();

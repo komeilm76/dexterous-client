@@ -14,6 +14,7 @@
   </FontProvider>
 </template>
 
+
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import FontProvider from './components/provider/FontProvider.vue';

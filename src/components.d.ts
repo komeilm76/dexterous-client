@@ -13,7 +13,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     AuthLayout: typeof import('./components/layout/AuthLayout.vue')['default']
     FontProvider: typeof import('./components/provider/FontProvider.vue')['default']
-    PwaInstaller: typeof import('./components/base/PwaInstaller.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SingleTabChannelProvider: typeof import('./components/provider/SingleTabChannelProvider.vue')['default']

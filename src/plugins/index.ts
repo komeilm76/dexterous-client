@@ -4,6 +4,7 @@
  * Automatically included in `./src/main.ts`
  */
 
+import icon from "./icon";
 import motion from "./motion";
 import pinia from "./pinia";
 import router from "./router";
@@ -15,4 +16,5 @@ export default {
   vuetify,
   tailwind,
   motion,
+  icon,
 };

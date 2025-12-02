@@ -11,9 +11,9 @@ import { parse, stringify } from "zipson";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import type { IThemeModeType } from "./theme/types";
 import theme from "./theme";
-import type { IPaletteType } from "./palette/types";
 import palette from "./palette";
 import { useBroadcastChannel } from "@vueuse/core";
+import type { IPaletteType } from "@/micro/palette/dist/palette-types";
 
 type IAppSettingChanges =
   | { key: "theme-mode"; value: IThemeModeType }

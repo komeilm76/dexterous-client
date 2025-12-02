@@ -2,9 +2,9 @@
   <VContainer>
     <VRow align="center" justify="center">
       <VCol cols="6">
-        <div class="rounded-full !p-12 text-center text-6xl border-4 border-tw-primary text-tw-primary">
+        <div class="rounded-full p-12! text-center text-6xl border-4 border-tw-primary text-tw-primary">
           <span>Dexterous</span>
-          <i class="fa-duotone fa-solid fa-medal"></i>
+          <i class="fa-solid fa-medal"></i>
         </div>
       </VCol>
       <VCol cols="12">
@@ -13,19 +13,20 @@
         </VSelect>
         <VSelect label="language" :items="setting.statics.languageList" v-model="setting.defaults.language"
           item-value="key" item-title="name"></VSelect>
-
         <VSelect label="theme" :items="setting.statics.themeModeList" v-model="setting.defaults.themeMode"
           item-value="key" item-title="name"></VSelect>
-
         <VSelect label="theme" :items="setting.statics.paletteList" v-model="setting.defaults.palette" item-value="key"
-          item-title="title"></VSelect>
+          item-title="name"></VSelect>
       </VCol>
     </VRow>
   </VContainer>
+
+
 </template>
 
 <script lang="ts" setup>
 import { useAppSetting } from '@/stores/application/setting';
+import kmIcon from 'km-icon';
 import _ from 'lodash';
 import { onMounted } from 'vue';
 const setting = useAppSetting();

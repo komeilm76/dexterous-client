@@ -11,7 +11,7 @@ import "vuetify/styles";
 // Composables
 import { createVuetify } from "vuetify";
 import type { App } from "vue";
-import vuetifyTheme from "@/micro/palette/dist/vuetify-theme.json";
+import vuetifyTheme from "@/micro/services/palette/dist/vuetify-theme.json";
 
 const install = async (app: App<Element>) => {
   const instance = createVuetify({
