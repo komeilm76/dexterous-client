@@ -4,7 +4,8 @@
   "type": "module",
   "version": "0.0.0",
   "scripts": {
-    "dev": "concurrently \"bun run generate-pwa:watch\" \"bun run generate-palette:watch\" \"bun run generate-icon:watch\" \"bun run generate-worker:watch\"  \"vite --host\"",
+    "dev:raw": "vite --host",
+    "dev": "concurrently \"bun run generate-env-new:watch\" \"bun run generate-head-new:watch\" \"bun run generate-pwa:watch\" \"bun run generate-palette-new:watch\" \"bun run generate-icon-new:watch\" \"bun run generate-worker:watch\"  \"vite --host\"",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -13,8 +14,14 @@
     "generate-worker": "npx esbuild ./src/micro/worker/index.ts --bundle --outfile=./public/worker/index.js --platform=browser --target=es2018",
     "generate-worker:watch": "npx esbuild ./src/micro/services/worker/inWorker/index.ts --bundle --outfile=./public/worker/index.js --platform=browser --target=es2018 --watch",
     "generate-palette:watch": "bun --watch ./src/micro/services/palette/index.ts",
+    "generate-palette-new:watch": "bun --watch ./src/micro-service/services/palette/src/index.ts",
     "generate-icon:watch": "bun --watch ./src/micro/services/icon/index.ts",
-    "generate-pwa:watch": "bun --watch ./src/micro/services/pwa/index.ts"
+    "generate-icon-new:watch": "bun --watch ./src/micro-service/services/icon/src/index.ts",
+    "generate-pwa:watch": "bun --watch ./src/micro/services/pwa/index.ts",
+    "generate-env:watch": "bun --watch --env-file=.env.production ./src/micro/services/env/index.ts",
+    "generate-env-new:watch": "bun --watch --env-file=.env.production ./src/micro-service/services/env/src/index.ts",
+    "generate-head:watch": "bun --watch ./src/micro/services/head/index.ts",
+    "generate-head-new:watch": "bun --watch ./src/micro-service/services/head/src/index.ts"
   },
   "dependencies": {
     "@alova/adapter-axios": "^2.0.16",
@@ -34,7 +41,7 @@
     "alova": "^3.3.4",
     "axios": "^1.12.2",
     "https-localhost": "^4.7.1",
-    "km-api": "^0.0.5",
+    "km-api": "^0.0.7",
     "km-icon": "^0.0.19",
     "km-manifest": "^0.0.5",
     "km-modal": "^0.0.11",
@@ -71,6 +78,7 @@
     "eslint-config-vuetify": "^4.2.0",
     "fs-jetpack": "^5.1.0",
     "npm-run-all2": "^8.0.4",
+    "prettier": "^3.7.4",
     "sass-embedded": "^1.92.1",
     "typescript": "~5.9.2",
     "unplugin-fonts": "^1.4.0",

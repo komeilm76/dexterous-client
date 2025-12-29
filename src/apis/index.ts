@@ -1,5 +1,5 @@
-import v2 from "./v2";
+import v1 from "./v1";
 
-export const useApiSchemas: () => typeof v2.config = () => {
-  return v2.config;
+export const useApiSchemas: () => typeof v1.config = () => {
+  return v1.config;
 };

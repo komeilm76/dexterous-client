@@ -8,18 +8,21 @@ import {
   useRequest,
   useWatcher,
 } from "alova/client";
-
-const http = createAlova({
-  requestAdapter: axiosRequestAdapter(),
-  baseURL: import.meta.env.VITE_API_BASE_URL,
-  statesHook: vueHook,
-  beforeRequest(request) {
-    if (request.meta?.auth == "YES") {
-    }
-  },
-});
+import { useEnvs } from "../env";
 
 export const useHttp = () => {
+  const { baseUrl } = useEnvs();
+  const http = createAlova({
+    requestAdapter: axiosRequestAdapter(),
+    ...(baseUrl && { baseURL: baseUrl }),
+    statesHook: vueHook,
+    beforeRequest(request) {
+      if (request.meta?.auth == "YES") {
+        // request.config.headers["Authorization"] =
+        //   `Bearer ${useAppSetting().accessToken}`;
+      }
+    },
+  });
   return {
     http,
     hook: {

@@ -10,6 +10,7 @@ import { defineConfig } from "vite";
 import { fileURLToPath, URL } from "node:url";
 // plugins
 import tailwindcss from "@tailwindcss/vite";
+
 // import mkcert from "vite-plugin-mkcert";
 // import { useManifest } from "km-manifest";
 // const m = useManifest();

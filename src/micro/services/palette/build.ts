@@ -4,7 +4,7 @@ import jetpack from "fs-jetpack";
 const build = async (config: ReturnType<typeof kmPalette.take>) => {
   const vuetifyConfig = kmPalette.generateVuetifyPalette(config.config as any);
   const { variables, dark, light, tailwind } = await kmPalette.makeCssAsString(
-    config.config as any
+    config.config as any,
   );
   const paletteFolder = jetpack.dir("./src/micro/services/palette/dist");
   const files = paletteFolder.find({ files: true, directories: false });
@@ -22,7 +22,7 @@ const build = async (config: ReturnType<typeof kmPalette.take>) => {
       `export type IPaletteType = ${config.names
         .map((i) => `"${i}"`)
         .join(" | ")}`,
-    ].join("\n")
+    ].join("\n"),
   );
 
   paletteFolder.write("palette-list.json", listOfTakedPalette);

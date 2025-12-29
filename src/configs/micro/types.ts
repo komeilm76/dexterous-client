@@ -10,7 +10,7 @@ export type IPaletteMakeGeneric = [
   "YES",
   IPaletteType,
   IPaletteColor,
-  IPaletteMode
+  IPaletteMode,
 ];
 type IThemeModeType = "dark" | "light" | "system";
 type IFontType =

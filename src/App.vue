@@ -20,7 +20,6 @@ import { onMounted } from 'vue';
 import FontProvider from './components/provider/FontProvider.vue';
 import { useAppSetting } from './stores/application/setting';
 const setting = useAppSetting()
-import kmIcon from 'km-icon'
 
 
 onMounted(() => {

@@ -16,11 +16,19 @@ import { createApp } from "vue";
 // Styles
 import "unfonts.css";
 
-const app = createApp(App);
-await plugins.icon.install();
-plugins.router.install(app);
-plugins.pinia.install(app);
-await plugins.tailwind.install();
-plugins.vuetify.install(app);
-plugins.motion.install(app);
-app.mount("#app");
+import { loadEnvs } from "./composables/env";
+
+const runApplicatio = async () => {
+  const envs = await loadEnvs();
+  const app = createApp(App);
+  app.provide("envs", envs);
+  plugins.pinia.install(app);
+  plugins.router.install(app);
+  await plugins.tailwind.install();
+  plugins.vuetify.install(app);
+  plugins.motion.install(app);
+  await plugins.icon.install();
+  app.mount("#app");
+};
+
+await runApplicatio();

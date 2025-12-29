@@ -2,6 +2,8 @@ import { z } from "zod";
 import kmApi from "km-api";
 import { useHttp } from "../http";
 import _ from "lodash";
+import { computed, ref, watchEffect } from "vue";
+import type { AxiosError } from "axios";
 type IErrorShape = {};
 
 type IResponseSuccessShape<DATA> = {
@@ -15,7 +17,7 @@ export const useApi = <CONFIG extends ReturnType<typeof kmApi.makeApiConfig>>(
   options: (v: CONFIG) => {
     order: ReturnType<CONFIG["makeParamsOrderedList"]>;
     cacheTime?: number | undefined;
-  }
+  },
 ) => {
   let cachedOptions: {
     body?: z.infer<CONFIG["request"]["body"]>;
@@ -42,7 +44,7 @@ export const useApi = <CONFIG extends ReturnType<typeof kmApi.makeApiConfig>>(
       body?: z.infer<CONFIG["request"]["body"]>,
       params?: z.infer<CONFIG["request"]["params"]>,
       query?: z.infer<CONFIG["request"]["query"]>,
-      loadFromCache?: boolean | undefined
+      loadFromCache?: boolean | undefined,
     ) => {
       const cacheTime = options(config).cacheTime;
       cachedOptions = { body, params, query, orders: options(config).order };
@@ -57,7 +59,7 @@ export const useApi = <CONFIG extends ReturnType<typeof kmApi.makeApiConfig>>(
       }
 
       return http.Request<
-        IResponseSuccessShape<z.infer<CONFIG["response"]["data"]>>
+        IResponseSuccessShape<z.infer<CONFIG["response"]["success"]>>
       >({
         url: config.makeFullPath(params, options(config).order),
         method: config.method,
@@ -71,11 +73,11 @@ export const useApi = <CONFIG extends ReturnType<typeof kmApi.makeApiConfig>>(
         ...(loadFromCache == undefined
           ? {}
           : loadFromCache == false
-          ? { cacheFor: 0 }
-          : {}),
+            ? { cacheFor: 0 }
+            : {}),
       });
     },
-    { immediate: false }
+    { immediate: false },
   );
 
   const reloadWithLastOptions = (loadFromCache?: boolean | undefined) => {
@@ -83,7 +85,7 @@ export const useApi = <CONFIG extends ReturnType<typeof kmApi.makeApiConfig>>(
       cachedOptions.body,
       cachedOptions.params,
       cachedOptions.query,
-      loadFromCache
+      loadFromCache,
     );
   };
 
@@ -93,9 +95,87 @@ export const useApi = <CONFIG extends ReturnType<typeof kmApi.makeApiConfig>>(
         firstOptions.body,
         firstOptions.params,
         firstOptions.query,
-        loadFromCache
+        loadFromCache,
       );
     }
   };
-  return { method, config, reloadWithLastOptions, reloadWithFirstOptions };
+
+  const percentOfLoadedController = (
+    total: number,
+    loaded: number,
+    percitionLength: number = 2,
+  ) => {
+    let validLoaded = 0;
+    if (loaded == 0 && total == 0) {
+      validLoaded = 0;
+    } else {
+      validLoaded = (100 * loaded) / total;
+    }
+    if (validLoaded == 0) {
+      return 0;
+    } else if (validLoaded == 100) {
+      return 100;
+    } else {
+      return Number(validLoaded.toFixed(percitionLength));
+    }
+  };
+  const uploadInfo = computed(() => {
+    const { loaded, total } = method.uploading.value;
+    // loaded-size - total-size
+    // loaded-percent - 100-percent
+    return {
+      loadedSize: loaded,
+      totalSize: total,
+      loadedPercent: percentOfLoadedController(total, loaded, 2),
+      uploading: loaded == total ? false : true,
+    };
+  });
+  const uploadStatus = ref<"NO" | "UPLOADING" | "YES" | "YES_AFTER_MOMENT">(
+    "NO",
+  );
+
+  watchEffect(() => {
+    if (uploadInfo.value.uploading == true) {
+      if (
+        uploadInfo.value.loadedPercent > 0 &&
+        uploadInfo.value.loadedPercent < 100
+      ) {
+        uploadStatus.value = "UPLOADING";
+      } else if (uploadInfo.value.loadedPercent == 0) {
+        uploadStatus.value = "UPLOADING";
+      } else if (uploadInfo.value.loadedPercent == 100) {
+        uploadStatus.value = "UPLOADING"; //maybe yes
+      } else {
+        uploadStatus.value = "UPLOADING";
+      }
+    } else {
+      if (uploadInfo.value.loadedPercent == 100) {
+        uploadStatus.value = "YES";
+        setTimeout(() => {
+          uploadStatus.value = "YES_AFTER_MOMENT";
+        }, 3000);
+      } else if (uploadInfo.value.loadedPercent == 0) {
+        uploadStatus.value = "NO";
+      } else {
+        uploadStatus.value = "NO";
+      }
+    }
+  });
+
+  const error = computed(() => {
+    const output = method.error.value;
+    return output as AxiosError<z.infer<CONFIG["response"]["error"]>>;
+  });
+
+  return {
+    method,
+    config,
+    reloadWithLastOptions,
+    reloadWithFirstOptions,
+    uploadData: {
+      info: uploadInfo,
+      status: uploadStatus,
+    },
+    error,
+  };
 };
