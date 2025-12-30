@@ -41,7 +41,7 @@
     "alova": "^3.3.4",
     "axios": "^1.12.2",
     "https-localhost": "^4.7.1",
-    "km-api": "^0.0.7",
+    "km-api": "^0.1.0",
     "km-icon": "^0.0.19",
     "km-manifest": "^0.0.5",
     "km-modal": "^0.0.11",
@@ -67,7 +67,8 @@
     "vuetify": "^3.10.1",
     "zipson": "^0.2.12",
     "zod": "^3.25.67",
-    "zod-to-json-schema": "^3.25.1"
+    "zod-to-json-schema": "^3.25.1",
+    "zod-to-ts": "^2.0.0"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",

@@ -1,5 +1,5 @@
 import kmApi from "km-api";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 const config = kmApi.makeApiConfig({
   path: `/origin`,

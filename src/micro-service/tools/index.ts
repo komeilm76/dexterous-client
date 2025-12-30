@@ -1,3 +1,4 @@
+import controller from "./controller";
 import directories from "./directories";
 import logger from "./logger";
 import nodes from "./nodes";
@@ -8,4 +9,5 @@ export default {
   nodes,
   logger,
   prettier,
+  controller,
 };

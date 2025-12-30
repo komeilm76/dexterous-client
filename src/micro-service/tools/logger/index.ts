@@ -8,4 +8,12 @@ const log = (step: { value: number }, stringTemplate: string, tag?: string) => {
     console.log(message);
   }
 };
-export default { log };
+const instance = (template: string) => {
+  const step = { value: 0 };
+  return {
+    log: (tag: string) => {
+      return log(step, template, tag);
+    },
+  };
+};
+export default { log, instance };
