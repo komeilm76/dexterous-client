@@ -1,31 +1,41 @@
 import kmTraversal from "km-traversal";
-import microServiceConfig from "../../../../configs/micro/index";
 import z from "zod";
-
-const configSchema = z.object({
-  baseUrl: z.string(),
-  setting: z.object({}),
-});
-export type IEnvConfig = z.infer<typeof configSchema>;
+import schema from "./schema";
 
 const envs = import.meta.env;
-const config: z.infer<typeof configSchema> = {
-  baseUrl: import.meta.env.VITE_API_BASE_URL,
-  setting: {},
+
+export type IConfig = {
+  envs: z.infer<typeof schema.zodSchema>;
+  schema: typeof schema;
 };
-const traversal = kmTraversal.adapter().register(kmTraversal.defaultConditions);
-traversal.traverseIn(
-  config,
-  ['(**).({value.equalWith:"true"})', '(**).({value.equalWith:"false"})'],
-  [
-    ({ setValue }) => {
-      console.log("was");
-      setValue(true);
-    },
-    ({ setValue }) => {
-      console.log("was");
-      setValue(false);
-    },
-  ],
-);
+const config: IConfig = {
+  envs: {
+    baseUrl: import.meta.env.VITE_API_BASE_URL,
+    setting: {},
+  },
+  schema,
+};
+
+const fixEnvs = () => {
+  const traversal = kmTraversal
+    .adapter()
+    .register(kmTraversal.defaultConditions);
+  traversal.traverseIn(
+    config.envs,
+    ['(**).({value.equalWith:"true"})', '(**).({value.equalWith:"false"})'],
+    [
+      ({ setValue }) => {
+        console.log("was");
+        setValue(true);
+      },
+      ({ setValue }) => {
+        console.log("was");
+        setValue(false);
+      },
+    ],
+  );
+};
+
+fixEnvs();
+
 export default config;

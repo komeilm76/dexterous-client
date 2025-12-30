@@ -5,5 +5,6 @@ const themeModeList: IThemeMode[] = [
   { key: "light", name: "Light" },
   { key: "system", name: "System" },
 ];
-const defaultThemeMode: IThemeModeType = "system";
+const defaultThemeMode: IThemeModeType =
+  import.meta.env.VITE_APP_SETTING_DEFAULT_THEME_MODE || "system";
 export default { themeModeList, defaultThemeMode };
