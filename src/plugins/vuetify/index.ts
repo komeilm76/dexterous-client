@@ -16,7 +16,7 @@ import type { App } from "vue";
 const install = async (app: App<Element>) => {
   const instance = createVuetify({
     theme: {
-      defaultTheme: "system",
+      defaultTheme: `${import.meta.env.VITE_APP_SETTING_DEFAULT_PALETTE}-${import.meta.env.VITE_APP_SETTING_DEFAULT_THEME_MODE}`,
       themes: vuetifyTheme,
     },
   });

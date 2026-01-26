@@ -18,7 +18,7 @@ import "unfonts.css";
 
 import { loadEnvs } from "./composables/env";
 
-const runApplicatio = async () => {
+const runApplication = async () => {
   const envs = await loadEnvs();
   const app = createApp(App);
   app.provide("envs", envs);
@@ -31,4 +31,4 @@ const runApplicatio = async () => {
   app.mount("#app");
 };
 
-await runApplicatio();
+await runApplication();

@@ -1,12 +1,12 @@
 import tools from "../../../../tools";
 import jetpack from "fs-jetpack";
 import { kmIcon } from "km-icon";
+import type { IConfig } from "../schemas";
 
 export default () => {
-  return tools.controller.makeMiddleware(async (config, next) => {
+  return tools.controller.makeMiddleware<IConfig>(async (config, next) => {
     // log
     const { log } = tools.logger.instance("[micro/icon]($)");
-    log("start");
     // -----------------------------------------
     // file name
     const fileName = "icon-fonts.ts";
@@ -21,8 +21,7 @@ export default () => {
     const fullNameInUseDir = jetpack.path(useDir, fileName);
 
     // name of css files
-    const { names } = kmIcon.fontawesome.makeConfig(config);
-    const usingPath = names.map(
+    const usingPath = config.names.map(
       (i) => `km-icon/assets/fontawesome/v7/pro/imports/${i}.css` as const,
     );
 

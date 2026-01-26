@@ -68,43 +68,21 @@
       "type": "image/png"
     },
     {
-      "src": "/pwa/icons/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
       "src": "/pwa/icons/icon-1024x1024.png",
       "sizes": "1024x1024",
-      "type": "image/png"
-    },
-    {
-      "src": "/pwa/icons/icon.png",
-      "sizes": "512x512",
       "type": "image/png"
     }
   ],
   "screenshots": [
     {
-      "src": "/src/assets/media/pwa/Screenshot-376x320.png",
-      "sizes": "376x320",
+      "src": "/pwa/screenshots/screenshot-1-1823x860_wide.png",
+      "sizes": "1823x860",
       "form_factor": "wide",
       "type": "image/png"
     },
     {
-      "src": "/src/assets/media/pwa/screencapture-1170x2532_1.png",
-      "sizes": "1170x2532",
-      "form_factor": "narrow",
-      "type": "image/png"
-    },
-    {
-      "src": "/src/assets/media/pwa/screencapture-1170x2532_2.png",
-      "sizes": "1170x2532",
-      "form_factor": "narrow",
-      "type": "image/png"
-    },
-    {
-      "src": "/src/assets/media/pwa/screencapture-1170x2532_3.png",
-      "sizes": "1170x2532",
+      "src": "/pwa/screenshots/screenshot-2-750x1334_narrow.png",
+      "sizes": "750x1334",
       "form_factor": "narrow",
       "type": "image/png"
     }

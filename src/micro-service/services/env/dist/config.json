@@ -1,5 +1,25 @@
 {
   "$schema": "./schema.json",
   "baseUrl": "https://dev-api.example.com",
-  "setting": {}
+  "setting": {
+    "font": {
+      "default": "Beiruti",
+      "fonts": {
+        "Beiruti": true,
+        "Noto Nastaliq Urdu": true,
+        "Caveat": true,
+        "Gulzar": true,
+        "Lalezar": true,
+        "Roboto": true,
+        "Vazirmatn": true
+      }
+    },
+    "language": {
+      "default": "en",
+      "languages": {
+        "en": true,
+        "fa": true
+      }
+    }
+  }
 }

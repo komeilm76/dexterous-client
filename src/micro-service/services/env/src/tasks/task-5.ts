@@ -1,6 +1,6 @@
 import jetpack from "fs-jetpack";
 import tools from "../../../../tools";
-import type { IConfig } from "../types";
+import type { IConfig } from "../schema";
 import {
   zodToTs,
   createAuxiliaryTypeStore,
@@ -14,7 +14,6 @@ import type { ZodType } from "zod/v4";
 export default () => {
   return tools.controller.makeMiddleware<IConfig>((config, next) => {
     const { log } = tools.logger.instance("[micro/env/task-5]($)");
-    log("start");
     // -----------------------------------------
     // Write Directory
     const writeDir = jetpack.path(

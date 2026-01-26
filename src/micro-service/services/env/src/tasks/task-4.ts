@@ -1,6 +1,6 @@
 import jetpack from "fs-jetpack";
 import tools from "../../../../tools";
-import type { IConfig } from "../types";
+import type { IConfig } from "../schema";
 import {
   zodToTs,
   createAuxiliaryTypeStore,
@@ -32,7 +32,6 @@ const convertZodToTs = (
 export default () => {
   return tools.controller.makeMiddleware<IConfig>((config, next) => {
     const { log } = tools.logger.instance("[micro/env/task-4]($)");
-    log("start");
     // -----------------------------------------
     // file name
     const fileName = "types.ts";

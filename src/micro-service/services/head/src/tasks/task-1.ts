@@ -1,9 +1,10 @@
 import tools from "../../../../tools";
 import jetpack from "fs-jetpack";
 import generator from "../generator";
+import type { IConfig } from "../schemas";
 
 export default () => {
-  return tools.controller.makeMiddleware((config, next) => {
+  return tools.controller.makeMiddleware<IConfig>((config, next) => {
     // log
     const { log } = tools.logger.instance("[micro/head]($)");
     // -----------------------------------------
