@@ -1,3 +1,4 @@
+import vuetifyTheme from "@/micro-service/services/palette/dist/vuetify-theme.json";
 /**
  * plugins/vuetify.ts
  *
@@ -11,12 +12,11 @@ import "vuetify/styles";
 // Composables
 import { createVuetify } from "vuetify";
 import type { App } from "vue";
-import vuetifyTheme from "@/micro/services/palette/dist/vuetify-theme.json";
 
 const install = async (app: App<Element>) => {
   const instance = createVuetify({
     theme: {
-      defaultTheme: "system",
+      defaultTheme: `${import.meta.env.VITE_APP_SETTING_DEFAULT_PALETTE}-${import.meta.env.VITE_APP_SETTING_DEFAULT_THEME_MODE}`,
       themes: vuetifyTheme,
     },
   });

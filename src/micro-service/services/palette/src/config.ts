@@ -1,17 +1,9 @@
 import kmPalette from "km-palette";
 
-export type IPaletteType = kmPalette.Type;
-type IPaletteMode = kmPalette.Mode;
-type IPaletteColor = kmPalette.Color;
-export type IPaletteTakeGeneric = [IPaletteType, IPaletteColor, IPaletteMode];
-export type IPaletteMakeGeneric = [
-  "YES",
-  IPaletteType,
-  IPaletteColor,
-  IPaletteMode,
-];
 import alreadyPalettes from "km-palette/assets/config-default-theme.json" with { type: "json" };
-const takedPalettes: Record<IPaletteType, boolean> = {
+import type { IConfig } from "./schemas";
+
+const takedPalettes: IConfig["useConfig"]["takedPalettes"] = {
   default: true,
   pastel: true,
   wood: false,
@@ -42,9 +34,9 @@ const takedPalettes: Record<IPaletteType, boolean> = {
   minimal: false,
 };
 
-const palettes = kmPalette.makeConfig<IPaletteMakeGeneric>(
+const palettes = kmPalette.makeConfig<IConfig["makedPaletteGenerics"]>(
   alreadyPalettes as unknown as ReturnType<
-    typeof kmPalette.makeConfig<IPaletteMakeGeneric>
+    typeof kmPalette.makeConfig<IConfig["makedPaletteGenerics"]>
   >,
 );
 

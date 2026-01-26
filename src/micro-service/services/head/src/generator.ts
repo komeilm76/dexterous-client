@@ -126,7 +126,7 @@ const renderAttrs = (attrs?: Attributes): string => {
   return Object.entries(attrs)
     .filter(([, v]) => v !== undefined && v !== false)
     .map(([k, v]) =>
-      v === true ? ` ${k}` : ` ${k}="${escapeHtml(String(v))}"`
+      v === true ? ` ${k}` : ` ${k}="${escapeHtml(String(v))}"`,
     )
     .join("");
 };

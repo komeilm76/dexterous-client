@@ -1,3 +1,6 @@
-import build from "./build";
+import tools from "../../../tools";
 import config from "./config";
-build(config, { renderAgainOnChange: true, copyAfterRender: true });
+import type { IConfig } from "./schemas";
+import task1 from "./tasks/task-1";
+
+tools.controller.middlewareController<IConfig>(config, [task1()]);

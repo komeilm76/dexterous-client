@@ -1,6 +1,6 @@
-import { importFontawesome } from "@/micro/services/icon/dist/fonts";
+import { registerIconFonts } from "./../../micro-service/services/icon/dist/icon-fonts";
 
 const install = async () => {
-  return await importFontawesome();
+  return await registerIconFonts();
 };
 export default { install };
