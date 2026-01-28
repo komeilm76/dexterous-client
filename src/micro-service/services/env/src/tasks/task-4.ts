@@ -37,8 +37,8 @@ export default () => {
     const fileName = "types.ts";
     // Write Directory
     const writeDir = jetpack.path(
-      tools.directories.microService,
-      "./services/env/dist",
+      tools.directories.microModules,
+      "./env",
     );
     const fullNameInWriteDir = jetpack.path(writeDir, fileName);
     // Use Directory

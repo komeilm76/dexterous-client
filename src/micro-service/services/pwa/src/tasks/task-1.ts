@@ -8,15 +8,13 @@ export default () => {
     const { log } = tools.logger.instance("[micro/pwa/task-1]($)");
     // -----------------------------------------
     // Write Directory
-    const writeDir = jetpack.path(
-      tools.directories.microService,
-      "./services/pwa/dist",
-    );
-    const useDir = jetpack.path(tools.directories.root, "./");
+    const writeDir = jetpack.path(tools.directories.microModules, "./pwa");
+    const useDir = jetpack.path(tools.directories.public, "./pwa");
     await jetpack.removeAsync(writeDir);
-    log("writed folder removed");
-    next()
-
+    log("writed directory removed");
+    await jetpack.removeAsync(useDir);
+    log("used directory removed");
+    next();
     // -----------------------------------------
   });
 };

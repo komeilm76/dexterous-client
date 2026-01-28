@@ -3,7 +3,9 @@ import type { IFont, IFontType } from "./font/types";
 import language from "./language";
 import type { ILanguage, ILanguageType } from "./language/types";
 import palette from "./palette";
-import type { IPalette, IPaletteType } from "./palette/types";
+import type { IPalette } from "./palette/types";
+import type { IPaletteType } from "@/micro-modules/palette/palette-types";
+
 import theme from "./theme";
 import type { IThemeModeType } from "./theme/types";
 

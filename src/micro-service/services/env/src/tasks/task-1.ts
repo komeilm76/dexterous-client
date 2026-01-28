@@ -7,14 +7,14 @@ export default () => {
     const { log } = tools.logger.instance("[micro/env/task-1]($)");
     // -----------------------------------------
     // Write Directory
-    const removeDir = jetpack.path(
-      tools.directories.microService,
-      "./services/env/dist",
+    const writeDir = jetpack.path(
+      tools.directories.microModules,
+      "./env",
     );
     // Use Directory
     const useDir = jetpack.path(tools.directories.public, "./env");
     Promise.all([
-      jetpack.removeAsync(removeDir),
+      jetpack.removeAsync(writeDir),
       jetpack.removeAsync(useDir),
     ]).then((res) => {
       log("removed files from 'writeDir' & 'useDir'");

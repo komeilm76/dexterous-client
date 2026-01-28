@@ -1,4 +1,4 @@
-import vuetifyTheme from "@/micro-service/services/palette/dist/vuetify-theme.json";
+import vuetifyTheme from "@/micro-modules/palette/vuetify-theme.json";
 /**
  * plugins/vuetify.ts
  *

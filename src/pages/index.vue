@@ -18,6 +18,23 @@
         <VSelect label="theme" :items="setting.statics.paletteList" v-model="setting.defaults.palette" item-value="key"
           item-title="name"></VSelect>
       </VCol>
+      <VCard class="w-full">
+        <VCardTitle>Card</VCardTitle>
+        <VDivider></VDivider>
+        <VCardText>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum placeat tempora at quia molestiae aspernatur
+          distinctio!
+        </VCardText>
+        <VDivider></VDivider>
+        <VCardActions>
+          <VBtn color="primary">YES</VBtn>
+          <VBtn color="secondary">NO</VBtn>
+          <VBtn color="error">NO</VBtn>
+          <VBtn color="info">NO</VBtn>
+          <VBtn color="success">NO</VBtn>
+          <VBtn color="warning">NO</VBtn>
+        </VCardActions>
+      </VCard>
     </VRow>
   </VContainer>
 

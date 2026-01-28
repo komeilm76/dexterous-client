@@ -18,72 +18,54 @@ export default () => {
     // log
     const { log } = tools.logger.instance("[micro/pwa/task-2]($)");
     // -----------------------------------------
-    // file name
-    const fileName = "manifest.json";
     // Write Directory
-    const writeDir = jetpack.path(
+    const writeDir = jetpack.path(tools.directories.microModules, "./pwa");
+    // Screenshot Directory
+    const readDir = jetpack.path(
       tools.directories.microService,
-      "./services/pwa/dist",
+      "services",
+      "pwa",
+      "src",
+      "assets",
+      "screenshots",
     );
-    // Assets Directory
-    const assetsDir = jetpack.path(
-      tools.directories.microService,
-      "./services/pwa/src/assets",
-    );
-    // screenshot controller
-    const screenShotDir = jetpack.path(assetsDir, "screenshots");
-    const screenshots = await jetpack
-      .dir(screenShotDir)
+
+    // list of screenshots
+    const screenshotPathList = await jetpack
+      .dir(readDir)
       .findAsync({ files: true });
+
     let imageIndex = 0;
-    for await (const shot of screenshots) {
+    for await (const shot of screenshotPathList) {
       imageIndex++;
-      const shotPath = jetpack.path(screenShotDir, shot);
+      const shotPath = jetpack.path(readDir, shot);
       const shotFile = await jetpack.readAsync(shotPath, "buffer");
       const { format, width, height } = await sharp(shotFile, {}).metadata();
-
       const defaultFormFactor = "narrow";
       const form_factor =
         width > height ? "wide" : width < height ? "narrow" : defaultFormFactor;
       const shotFileName = `screenshot-${imageIndex}-${width}x${height}_${form_factor}.${format}`;
-      const fullFilePathWithName = `/pwa/screenshots/${shotFileName}`;
-      config.manifest.screenshots.push({
+      const fullFilePathWithName = `/screenshots/${shotFileName}`;
+      const fullStaticFilePathWithName = jetpack.path(
+        writeDir,
+        makeValidPathFromManifest(fullFilePathWithName),
+      );
+      const imageDetails = {
+        staticSrc: fullStaticFilePathWithName,
         src: fullFilePathWithName,
         sizes: `${width}x${height}`,
         form_factor: form_factor,
         // @ts-ignore
         type: `image/${format}`,
-      });
-      console.log("config", config.manifest.screenshots);
+      };
       if (shotFile) {
         await jetpack.writeAsync(
-          jetpack.path(
-            writeDir,
-            makeValidPathFromManifest(fullFilePathWithName),
-          ),
+          jetpack.path(imageDetails.staticSrc),
           shotFile,
         );
       }
     }
-
-    // icons controller
-    const iconFullPAth = jetpack.path(assetsDir, "logo.png");
-    console.log('iconFullPAth',iconFullPAth);
-    
-    const iconFile = await jetpack.readAsync(iconFullPAth,'buffer');
-    const {format} =  await sharp(iconFile).metadata()
-    
-    for await (const size of config.iconSizes) {
-      config.manifest.icons.push({
-        src: `/pwa/icons/icon-${size}x${size}.${format}`,
-        sizes: `${size}x${size}`,
-        // @ts-ignore
-        type: `image/${format}`,
-      });
-    }
-    const fullNameInWriteDir = jetpack.path(writeDir, "pwa", fileName);
-    jetpack.write(fullNameInWriteDir, config.manifest);
-    log("writed manifest file");
+    log("created screenshots in writed directory");
     next();
 
     // -----------------------------------------

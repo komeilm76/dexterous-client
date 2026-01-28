@@ -1,0 +1,1 @@
+export type IPaletteType = "dexterous" | "default"

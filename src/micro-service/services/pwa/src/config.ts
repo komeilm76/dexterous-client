@@ -7,8 +7,8 @@ const config: IConfig = {
     icons: [],
     // @ts-ignore
     screenshots: [],
-    background_color: "#078af7",
-    theme_color: "#078af7",
+    background_color: "#0a1a2f",
+    theme_color: "#0a1a2f",
     description: "Dexterous Client Application",
     id: "/?source=pwa",
     start_url: "/?source=pwa",

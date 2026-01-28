@@ -9,7 +9,7 @@ const config = generator.makeHead([
     name: "link",
     attrs: {
       rel: "icon",
-      href: "/favicon.ico",
+      href: "/pwa/favicon.ico",
     },
   },
   {
