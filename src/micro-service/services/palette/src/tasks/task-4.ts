@@ -13,8 +13,8 @@ export default () => {
       const fileFormat = "css";
       // Write Directory
       const writeDir = jetpack.path(
-        tools.directories.microService,
-        "./services/palette/dist",
+        tools.directories.microModules,
+        "./palette",
       );
 
       const useConfig = kmPalette.take<IConfig["takedPaletteGenerics"]>(

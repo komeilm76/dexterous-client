@@ -13,7 +13,7 @@ import type { IThemeModeType } from "./theme/types";
 import theme from "./theme";
 import palette from "./palette";
 import { useBroadcastChannel } from "@vueuse/core";
-import type { IPaletteType } from "@/micro/palette/dist/palette-types";
+import type { IPaletteType } from "@/micro-modules/palette/palette-types";
 
 type IAppSettingChanges =
   | { key: "theme-mode"; value: IThemeModeType }
@@ -56,7 +56,7 @@ export const useAppSetting = defineStore(
     };
     const currentThemeMode = computed(() => {
       return theme.themeModeList.find(
-        (item) => item.key == _defaults.themeMode
+        (item) => item.key == _defaults.themeMode,
       );
     });
     // palette
@@ -110,7 +110,7 @@ export const useAppSetting = defineStore(
         if (nl && nl.name !== ol.name) {
           post({ key: "language", value: nl.key });
         }
-      }
+      },
     );
 
     return {
@@ -137,5 +137,5 @@ export const useAppSetting = defineStore(
         serialize: stringify,
       },
     },
-  }
+  },
 );

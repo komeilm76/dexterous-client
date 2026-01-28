@@ -1,5 +1,5 @@
 /* @import "tailwindcss"; */
-@import "../../micro-service/services/palette/dist/tailwind.css";
+@import "../../micro-modules/palette/tailwind.css";
 
 @theme {
   --breakpoint-xs: 599px;

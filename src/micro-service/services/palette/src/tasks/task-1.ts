@@ -13,8 +13,8 @@ export default () => {
       const fileName = "vuetify-theme.json";
       // Write Directory
       const writeDir = jetpack.path(
-        tools.directories.microService,
-        "./services/palette/dist",
+        tools.directories.microModules,
+        "./palette",
       );
       const useDir = jetpack.path(tools.directories.root, "./");
       const useConfig = kmPalette.take<IConfig["takedPaletteGenerics"]>(
@@ -29,7 +29,7 @@ export default () => {
 
       jetpack.dir(writeDir).write(fileName, vuetifyConfig);
       log("vuetify theme writed");
-      next()
+      next();
     },
   );
 };

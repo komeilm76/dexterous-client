@@ -14,10 +14,7 @@ export default () => {
     const readDir = jetpack.path(tools.directories.root, "./");
     const fullNameInReadDir = jetpack.path(readDir, fileName);
     // Write Directory
-    const writeDir = jetpack.path(
-      tools.directories.microService,
-      "./services/head/dist",
-    );
+    const writeDir = jetpack.path(tools.directories.microModules, "./head");
     const fullNameInWriteDir = jetpack.path(writeDir, fileName);
     // Use Directory
     const useDir = jetpack.path(tools.directories.root, "./");

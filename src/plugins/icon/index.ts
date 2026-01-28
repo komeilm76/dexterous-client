@@ -1,4 +1,4 @@
-import { registerIconFonts } from "./../../micro-service/services/icon/dist/icon-fonts";
+import { registerIconFonts } from "@/micro-modules/icon/icon-fonts";
 
 const install = async () => {
   return await registerIconFonts();

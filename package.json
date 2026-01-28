@@ -2,7 +2,7 @@
   "name": "dexterous-client",
   "private": true,
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "dev:raw": "vite --host",
     "dev": "concurrently \"bun run generate-env:watch\" \"bun run generate-head:watch\" \"bun run generate-pwa:watch\" \"bun run generate-palette:watch\" \"bun run generate-icon:watch\" \"bun run generate-worker:watch\"  \"vite --host\"",

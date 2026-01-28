@@ -12,8 +12,8 @@ export default () => {
     const fileName = "palette-types.ts";
     // Write Directory
     const writeDir = jetpack.path(
-      tools.directories.microService,
-      "./services/palette/dist",
+      tools.directories.microModules,
+      "./palette",
     );
     const useDir = jetpack.path(tools.directories.root, "./");
     const useConfig = kmPalette.take<IConfig['takedPaletteGenerics']>(

@@ -1,4 +1,4 @@
-import type { IPaletteType } from "@/stores/application/setting/palette/types";
+import type { IPaletteType } from "@/micro-modules/palette/palette-types";
 import type { IThemeModeType } from "@/stores/application/setting/theme/types";
 import type { Colors } from "vuetify/lib/composables/theme.mjs";
 

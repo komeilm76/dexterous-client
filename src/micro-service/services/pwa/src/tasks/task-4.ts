@@ -1,31 +1,51 @@
 import tools from "../../../../tools";
-import sharp from "sharp";
-import ico from "sharp-ico";
-import logo from "../assets/logo.png";
 import jetpack from "fs-jetpack";
 import type { IConfig } from "../schemas";
+import sharp from "sharp";
+
+const makeValidPathFromManifest = (path: string) => {
+  if (path.startsWith("./")) {
+    return path;
+  } else if (path.startsWith("/")) {
+    return `.${path}`;
+  } else {
+    return `./${path}`;
+  }
+};
+
 export default () => {
   return tools.controller.makeMiddleware<IConfig>(async (config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro/pwa/task-4]($)");
+    const { log } = tools.logger.instance("[micro/pwa/task-3]($)");
     // -----------------------------------------
-    // file name
-    const fileName = "favicon.ico";
     // Write Directory
-    const writeDir = jetpack.path(
+    const writeDir = jetpack.path(tools.directories.microModules, "./pwa");
+    // Assets Directory
+    const readDir = jetpack.path(
       tools.directories.microService,
-      "./services/pwa/dist/pwa",
+      "services",
+      "pwa",
+      "src",
+      "assets",
     );
-    const fullNameInWriteDir = jetpack.path(writeDir, fileName);
-
-    // generate ico
-    const bufferLogo = await sharp(logo)
-      .resize({ width: 64, height: 64 })
-      .toBuffer();
-    const bufferIco = ico.encode([bufferLogo]);
-    jetpack.write(fullNameInWriteDir, bufferIco);
-    console.log("ico created, writed");
-    next()
+    // Screenshot Directory
+    const logoPath = jetpack.path(readDir, "logo.png");
+    const logoBuffer = jetpack.read(logoPath, "buffer");
+    const logoFile = sharp(logoBuffer);
+    for await (const size of config.iconSizes) {
+      const { format } = await logoFile.metadata();
+      const icon = await logoFile
+        .resize({ width: size, height: size })
+        .toBuffer();
+      const writePath = jetpack.path(
+        writeDir,
+        "icons",
+        `icon-${size}x${size}.${format}`,
+      );
+      await jetpack.writeAsync(writePath, icon);
+    }
+    log("created icons from logo in writed directory");
+    next();
 
     // -----------------------------------------
   });

@@ -12,8 +12,8 @@ export default () => {
     const fileName = "icon-fonts.ts";
     // Write Directory
     const writeDir = jetpack.path(
-      tools.directories.microService,
-      "./services/icon/dist",
+      tools.directories.microModules,
+      "./icon",
     );
     const fullNameInWriteDir = jetpack.path(writeDir, fileName);
     // Use Directory

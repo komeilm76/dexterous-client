@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@import "./dexterous-variables.css";
+@import "./default-variables.css";
+@import "./dexterous-light.css";
+@import "./default-light.css";
+@import "./dexterous-dark.css";
+@import "./default-dark.css";
+@theme{--color-tw-background:var(--color-tw-background);--color-tw-surface:var(--color-tw-surface);--color-tw-surface-bright:var(--color-tw-surface-bright);--color-tw-surface-light:var(--color-tw-surface-light);--color-tw-surface-variant:var(--color-tw-surface-variant);--color-tw-on-surface-variant:var(--color-tw-on-surface-variant);--color-tw-primary:var(--color-tw-primary);--color-tw-primary-darken-1:var(--color-tw-primary-darken-1);--color-tw-secondary:var(--color-tw-secondary);--color-tw-secondary-darken-1:var(--color-tw-secondary-darken-1);--color-tw-error:var(--color-tw-error);--color-tw-info:var(--color-tw-info);--color-tw-success:var(--color-tw-success);--color-tw-warning:var(--color-tw-warning)}

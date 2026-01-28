@@ -1,13 +1,6 @@
 import jetpack from "fs-jetpack";
 import tools from "../../../../tools";
 import type { IConfig } from "../schema";
-import {
-  zodToTs,
-  createAuxiliaryTypeStore,
-  createTypeAlias,
-  printNode,
-  type ZodToTsOptions,
-} from "zod-to-ts";
 import z from "zod";
 import type { ZodType } from "zod/v4";
 
@@ -17,8 +10,8 @@ export default () => {
     // -----------------------------------------
     // Write Directory
     const writeDir = jetpack.path(
-      tools.directories.microService,
-      "./services/env/dist",
+      tools.directories.microModules,
+      "./env",
     );
     // Use Directory
     const useDir = jetpack.path(tools.directories.public, "./env");

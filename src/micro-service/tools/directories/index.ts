@@ -4,9 +4,14 @@ const rootDir = jetpack.path(jetpack.cwd(), "./");
 const publicDir = jetpack.path(jetpack.cwd(), "./public");
 const srcDir = jetpack.path(jetpack.cwd(), "./src");
 const microServiceDir = jetpack.path(jetpack.cwd(), "./src/micro-service");
+const microServiceModulesDir = jetpack.path(
+  jetpack.cwd(),
+  "./src/micro-modules",
+);
 export default {
   root: rootDir,
   public: publicDir,
   src: srcDir,
   microService: microServiceDir,
+  microModules: microServiceModulesDir,
 };
