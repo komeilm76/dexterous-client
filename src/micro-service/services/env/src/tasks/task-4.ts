@@ -31,7 +31,7 @@ const convertZodToTs = (
 
 export default () => {
   return tools.controller.makeMiddleware<IConfig>((config, next) => {
-    const { log } = tools.logger.instance("[micro/env/task-4]($)");
+    const { log } = tools.logger.instance("[micro-service/env/task-4]($)");
     // -----------------------------------------
     // file name
     const fileName = "types.ts";

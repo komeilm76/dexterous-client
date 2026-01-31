@@ -6,7 +6,7 @@ import type { IConfig } from "../schemas";
 export default () => {
   return tools.controller.makeMiddleware<IConfig["useConfig"]>(async (config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro/palette/task-2]($)");
+    const { log } = tools.logger.instance("[micro-service/palette/task-2]($)");
     // -----------------------------------------
     // file name
     const fileName = "palette-types.ts";

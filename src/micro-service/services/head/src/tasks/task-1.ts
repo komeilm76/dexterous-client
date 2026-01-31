@@ -6,7 +6,7 @@ import type { IConfig } from "../schemas";
 export default () => {
   return tools.controller.makeMiddleware<IConfig>((config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro/head]($)");
+    const { log } = tools.logger.instance("[micro-service/head]($)");
     // -----------------------------------------
     // file name
     const fileName = "index.html";

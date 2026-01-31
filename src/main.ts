@@ -32,3 +32,7 @@ const runApplication = async () => {
 };
 
 await runApplication();
+
+navigator.serviceWorker.register("/service-worker/index.global.js", {
+  type: "module",
+});

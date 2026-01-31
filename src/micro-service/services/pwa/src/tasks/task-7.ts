@@ -5,7 +5,7 @@ import type { IConfig } from "../schemas";
 export default () => {
   return tools.controller.makeMiddleware<IConfig>(async (config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro/pwa/task-6]($)");
+    const { log } = tools.logger.instance("[micro-service/pwa/task-6]($)");
     // -----------------------------------------
     // Write Directory
     const writeDir = jetpack.path(tools.directories.microModules, "./pwa");

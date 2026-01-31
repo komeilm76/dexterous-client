@@ -5,7 +5,7 @@ import z from "zod/v4";
 
 export default () => {
   return tools.controller.makeMiddleware<IConfig>((config, next) => {
-    const { log } = tools.logger.instance("[micro/env/task-3]($)");
+    const { log } = tools.logger.instance("[micro-service/env/task-3]($)");
     // -----------------------------------------
     // file name
     const fileName = "schema.json";

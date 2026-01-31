@@ -7,7 +7,7 @@ export default () => {
   return tools.controller.makeMiddleware<IConfig["useConfig"]>(
     async (config, next) => {
       // log
-      const { log } = tools.logger.instance("[micro/palette/task-6]($)");
+      const { log } = tools.logger.instance("[micro-service/palette/task-6]($)");
       // -----------------------------------------
       // Write Directory
       const writeDir = jetpack.path(

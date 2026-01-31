@@ -7,7 +7,7 @@ import sharp from "sharp";
 export default () => {
   return tools.controller.makeMiddleware<IConfig>(async (config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro/pwa/task-5]($)");
+    const { log } = tools.logger.instance("[micro-service/pwa/task-5]($)");
     // -----------------------------------------
     // Write Directory
     const writeDir = jetpack.path(tools.directories.microModules, "./pwa");

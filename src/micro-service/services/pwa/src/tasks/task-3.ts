@@ -31,7 +31,7 @@ const formatOfLogo = async (logoDir: string) => {
 export default () => {
   return tools.controller.makeMiddleware<IConfig>(async (config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro/pwa/task-2]($)");
+    const { log } = tools.logger.instance("[micro-service/pwa/task-2]($)");
     // -----------------------------------------
     // Write Directory
     const writeDir = jetpack.path(tools.directories.microModules, "./pwa");

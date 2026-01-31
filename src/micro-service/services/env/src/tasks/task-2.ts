@@ -4,7 +4,7 @@ import type { IConfig } from "../schema";
 
 export default () => {
   return tools.controller.makeMiddleware<IConfig>((config, next) => {
-    const { log } = tools.logger.instance("[micro/env/task-2]($)");
+    const { log } = tools.logger.instance("[micro-service/env/task-2]($)");
     // -----------------------------------------
     // file name
     const fileName = "config.json";

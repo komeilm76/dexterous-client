@@ -16,7 +16,7 @@ const makeValidPathFromManifest = (path: string) => {
 export default () => {
   return tools.controller.makeMiddleware<IConfig>(async (config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro/pwa/task-4]($)");
+    const { log } = tools.logger.instance("[micro-service/pwa/task-4]($)");
     // -----------------------------------------
     // Write Directory
     const writeDir = jetpack.path(tools.directories.microModules, "./pwa");

@@ -6,7 +6,7 @@ import type { ZodType } from "zod/v4";
 
 export default () => {
   return tools.controller.makeMiddleware<IConfig>((config, next) => {
-    const { log } = tools.logger.instance("[micro/env/task-5]($)");
+    const { log } = tools.logger.instance("[micro-service/env/task-5]($)");
     // -----------------------------------------
     // Write Directory
     const writeDir = jetpack.path(

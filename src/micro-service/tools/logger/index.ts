@@ -1,11 +1,15 @@
+import chalk from "chalk";
 const log = (step: { value: number }, stringTemplate: string, tag?: string) => {
   step.value = step.value + 1;
   if (tag) {
-    const message = stringTemplate.replace("$", ` #${step.value}: ${tag} `);
-    console.log(message);
+    const message = stringTemplate.replace(
+      "$",
+      ` ${chalk.green(chalk.bold(`#${step.value}`))}: ${chalk.yellow(tag)} `,
+    );
+    console.log(chalk.dim(chalk.black(message)));
   } else {
-    const message = stringTemplate.replace("$", ` ${step.value} `);
-    console.log(message);
+    const message = stringTemplate.replace("$", ` ${chalk.green(chalk.bold(step.value))} `);
+    console.log(chalk.dim(chalk.black(message)));
   }
 };
 const instance = (template: string) => {

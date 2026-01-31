@@ -7,7 +7,7 @@ import type { IConfig } from "../schemas";
 export default () => {
   return tools.controller.makeMiddleware<IConfig>(async (config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro/pwa/task-4]($)");
+    const { log } = tools.logger.instance("[micro-service/pwa/task-4]($)");
     // -----------------------------------------
     // file name
     const fileName = "favicon.ico";

@@ -17,7 +17,7 @@ const makeValidPathFromManifest = (path: string) => {
 export default () => {
   return tools.controller.makeMiddleware<IConfig>(async (config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro/pwa/task-3]($)");
+    const { log } = tools.logger.instance("[micro-service/pwa/task-3]($)");
     // -----------------------------------------
     // file name
     const fileName = "manifest.json";
