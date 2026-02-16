@@ -96,11 +96,11 @@ export default defineConfig({
     Fonts({
       fontsource: {
         families: [
-          {
-            name: "Roboto",
-            weights: [100, 300, 400, 500, 700, 900],
-            styles: ["normal", "italic"],
-          },
+          // {
+          //   name: "Roboto",
+          //   weights: [100, 300, 400, 500, 700, 900],
+          //   styles: ["normal", "italic"],
+          // },
           // Language: ['en','fa']
           {
             name: "Beiruti",
@@ -108,28 +108,28 @@ export default defineConfig({
             styles: ["normal"],
           },
           // Language: ['fa']
-          {
-            name: "Noto Nastaliq Urdu",
-            weights: [400],
-            styles: ["normal"],
-          },
+          // {
+          //   name: "Noto Nastaliq Urdu",
+          //   weights: [400],
+          //   styles: ["normal"],
+          // },
           // Language: ['fa']
-          {
-            name: "Gulzar",
-            weights: [400],
-            styles: ["normal"],
-          },
+          // {
+          //   name: "Gulzar",
+          //   weights: [400],
+          //   styles: ["normal"],
+          // },
           // Language: ['fa']
-          {
-            name: "Lalezar",
-            weights: [400],
-            styles: ["normal"],
-          },
-          {
-            name: "Caveat",
-            weights: [400, 500, 600, 700],
-            styles: ["normal"],
-          },
+          // {
+          //   name: "Lalezar",
+          //   weights: [400],
+          //   styles: ["normal"],
+          // },
+          // {
+          //   name: "Caveat",
+          //   weights: [400, 500, 600, 700],
+          //   styles: ["normal"],
+          // },
         ],
       },
     }),

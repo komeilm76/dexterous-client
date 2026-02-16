@@ -37,7 +37,7 @@
     "axios": "^1.12.2",
     "chalk": "^5.6.2",
     "https-localhost": "^4.7.1",
-    "km-api": "^0.2.0",
+    "km-api": "^0.2.1",
     "km-icon": "^0.0.19",
     "km-manifest": "^0.0.5",
     "km-modal": "^0.0.11",
@@ -62,7 +62,7 @@
     "vue-use": "^0.2.0",
     "vuetify": "^3.10.1",
     "zipson": "^0.2.12",
-    "zod": "^3.25.67",
+    "zod": "^4.3.6",
     "zod-to-json-schema": "^3.25.1",
     "zod-to-ts": "^2.0.0"
   },

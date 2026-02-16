@@ -1,14 +1,20 @@
-import kmApi from "km-api";
-import { z } from "zod/v4";
+import { kmApi } from "km-api";
+import { z } from "zod";
 
-const config = kmApi.makeApiConfig({
-  path: `/origin`,
+const schema = z.object({
+  name: z.string(),
+});
+
+const config = kmApi.v4.makeApiConfig({
+  pathShape: `/origin`,
   method: "get",
   auth: "YES",
   disable: "NO",
   request: {
     body: z.undefined(),
     params: z.object({}),
+    cookies: z.object({}),
+    headers: z.object({}),
     query: z.object({}),
   },
   response: {

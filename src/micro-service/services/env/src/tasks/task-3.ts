@@ -1,7 +1,7 @@
 import jetpack from "fs-jetpack";
 import tools from "../../../../tools";
 import type { IConfig } from "../schema";
-import z from "zod/v4";
+import z from "zod";
 
 export default () => {
   return tools.controller.makeMiddleware<IConfig>((config, next) => {

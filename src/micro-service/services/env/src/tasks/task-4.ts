@@ -9,7 +9,7 @@ import {
   type ZodToTsOptions,
 } from "zod-to-ts";
 import z from "zod";
-import type { ZodType } from "zod/v4";
+import type { ZodType } from "zod";
 
 const convertZodToTs = (
   schema: ZodType,
