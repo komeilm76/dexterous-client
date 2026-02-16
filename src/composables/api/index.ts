@@ -1,5 +1,5 @@
 import { z } from "zod";
-import kmApi from "km-api";
+import { kmApi } from "km-api";
 import { useHttp } from "../http";
 import _ from "lodash";
 import { computed, ref, watchEffect } from "vue";
@@ -12,10 +12,9 @@ type IResponseSuccessShape<DATA> = {
   statusText: string;
 };
 
-export const useApi = <CONFIG extends ReturnType<typeof kmApi.makeApiConfig>>(
+export const useApi = <CONFIG extends ReturnType<typeof kmApi.v4.makeApiConfig>>(
   config: CONFIG,
-  options: (v: CONFIG) => {
-    order: ReturnType<CONFIG["makeParamsOrderedList"]>;
+  http_options: (v: CONFIG) => {
     cacheTime?: number | undefined;
   },
 ) => {
@@ -23,56 +22,59 @@ export const useApi = <CONFIG extends ReturnType<typeof kmApi.makeApiConfig>>(
     body?: z.infer<CONFIG["request"]["body"]>;
     params?: z.infer<CONFIG["request"]["params"]>;
     query?: z.infer<CONFIG["request"]["query"]>;
-    orders?: ReturnType<CONFIG["makeParamsOrderedList"]> | [];
+    cookies?: z.infer<CONFIG["request"]["cookies"]>;
+    headers?: z.infer<CONFIG["request"]["headers"]>;
   } = {};
   let firstOptions:
     | {
-        body?: z.infer<CONFIG["request"]["body"]>;
-        params?: z.infer<CONFIG["request"]["params"]>;
-        query?: z.infer<CONFIG["request"]["query"]>;
-        orders?: ReturnType<CONFIG["makeParamsOrderedList"]> | [];
-      }
+      body?: z.infer<CONFIG["request"]["body"]>;
+      params?: z.infer<CONFIG["request"]["params"]>;
+      query?: z.infer<CONFIG["request"]["query"]>;
+      cookies?: z.infer<CONFIG["request"]["cookies"]>;
+      headers?: z.infer<CONFIG["request"]["headers"]>;
+    }
     | undefined = undefined;
   const { hook, http } = useHttp();
-  // const orders = ref<ReturnType<CONFIG["makeParamsOrderedList"]> | []>([]);
-  // const body = ref<ReturnType<CONFIG["makeBody"]> | {}>({});
-  // const params = ref<z.infer<CONFIG["request"]["params"]> | {}>({});
-  // const queries = ref<ReturnType<CONFIG["makeQueries"]> | {}>({});
 
   const method = hook.useRequest(
-    (
+    (requestConfig: {
       body?: z.infer<CONFIG["request"]["body"]>,
       params?: z.infer<CONFIG["request"]["params"]>,
       query?: z.infer<CONFIG["request"]["query"]>,
+      cookies?: z.infer<CONFIG["request"]["cookies"]>;
+      headers?: z.infer<CONFIG["request"]["headers"]>;
       loadFromCache?: boolean | undefined,
-    ) => {
-      const cacheTime = options(config).cacheTime;
-      cachedOptions = { body, params, query, orders: options(config).order };
+    }) => {
+      const cacheTime = http_options(config).cacheTime;
+      cachedOptions = { body: requestConfig.body, params: requestConfig.params, query: requestConfig.query, };
 
       if (firstOptions == undefined) {
         firstOptions = _.cloneDeep({
-          body,
-          params,
-          query,
-          orders: options(config).order,
+          body: requestConfig.body,
+          params: requestConfig.params,
+          query: requestConfig.query,
+          cookies: requestConfig.cookies,
+          headers: requestConfig.headers,
         });
       }
 
+      const adapterResponseType = kmApi.adapters.convertResponseType(config.responseContentType!, 'alova-axios')
       return http.Request<
         IResponseSuccessShape<z.infer<CONFIG["response"]["success"]>>
       >({
-        url: config.makeFullPath(params, options(config).order),
+        url: config.makeFullPath(requestConfig.params),
         method: config.method,
         meta: {
           auth: config.auth,
         },
-        ...(config.responseType == "blob" && { responseType: "blob" }),
-        data: body as unknown as any,
-        params: query || {},
+        data: requestConfig.body as unknown as any,
+        params: requestConfig.query || {},
+        ...(requestConfig.headers && { headers: requestConfig.headers }),
+        ...(adapterResponseType.responseType && { responseType: adapterResponseType.responseType }),
         ...(cacheTime == undefined ? {} : { cacheFor: cacheTime }),
-        ...(loadFromCache == undefined
+        ...(requestConfig.loadFromCache == undefined
           ? {}
-          : loadFromCache == false
+          : requestConfig.loadFromCache == false
             ? { cacheFor: 0 }
             : {}),
       });
@@ -82,21 +84,28 @@ export const useApi = <CONFIG extends ReturnType<typeof kmApi.makeApiConfig>>(
 
   const reloadWithLastOptions = (loadFromCache?: boolean | undefined) => {
     method.send(
-      cachedOptions.body,
-      cachedOptions.params,
-      cachedOptions.query,
-      loadFromCache,
+      {
+        body: cachedOptions.body,
+        params: cachedOptions.params,
+        query: cachedOptions.query,
+        cookies: cachedOptions.cookies,
+        headers: cachedOptions.headers,
+        loadFromCache,
+      }
     );
   };
 
   const reloadWithFirstOptions = (loadFromCache?: boolean | undefined) => {
     if (firstOptions) {
       method.send(
-        firstOptions.body,
-        firstOptions.params,
-        firstOptions.query,
-        loadFromCache,
-      );
+        {
+          body: firstOptions.body,
+          params: firstOptions.params,
+          query: firstOptions.query,
+          cookies: firstOptions.cookies,
+          headers: firstOptions.headers,
+          loadFromCache,
+        });
     }
   };
 

@@ -37,7 +37,7 @@
     "axios": "^1.12.2",
     "chalk": "^5.6.2",
     "https-localhost": "^4.7.1",
-    "km-api": "^0.1.0",
+    "km-api": "^0.2.0",
     "km-icon": "^0.0.19",
     "km-manifest": "^0.0.5",
     "km-modal": "^0.0.11",
