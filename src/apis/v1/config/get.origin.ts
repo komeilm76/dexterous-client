@@ -12,10 +12,20 @@ const config = kmApi.v4.makeApiConfig({
   disable: "NO",
   request: {
     body: z.undefined(),
-    params: z.object({}),
-    cookies: z.object({}),
-    headers: z.object({}),
-    query: z.object({}),
+    params: z.object({
+      id: z.string(),
+    }),
+    cookies: z.object({
+      sessionId: z.string(),
+    }),
+    headers: z.object({
+      "x-api-key": z.string(),
+    }),
+    query: z.object({
+      page: z.number().int().optional(),
+      pageSize: z.number().int().optional(),
+      searchTerm: z.string().optional(),
+    }),
   },
   response: {
     success: z.array(
@@ -28,5 +38,7 @@ const config = kmApi.v4.makeApiConfig({
     ),
     error: z.object({}),
   },
+  // requestContentType: "application/json",
+  // responseContentType: "application/json",
 });
 export default { config };

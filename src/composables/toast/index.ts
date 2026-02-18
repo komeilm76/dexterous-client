@@ -81,8 +81,8 @@ const entryToastSchema = z.union([
 
 const outputToastSchema = entryToastSchema.and(
   z.object({
-    id: z.string().uuid(),
-  })
+    id: z.uuid(),
+  }),
 );
 
 const pendingToastList = ref<z.infer<typeof outputToastSchema>[]>([]);
@@ -119,7 +119,7 @@ const hookOfUpdateToast = (id: string) => {
   // }, 500);
 };
 const hookOfSaveToast = (
-  toast: z.infer<typeof toastSchema> & { id: string; type: any }
+  toast: z.infer<typeof toastSchema> & { id: string; type: any },
 ) => {
   hookOfToast.next({ ...toast, type: "save" as any });
 };

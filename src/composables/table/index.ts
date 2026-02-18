@@ -2,7 +2,7 @@ import _ from "lodash";
 import { computed, ref, type Ref } from "vue";
 import type { DataTableHeader } from "vuetify";
 import type { ItemType } from "vuetify/lib/components/VDataTable/VDataTableServer.mjs";
-import type { AnyZodObject, z } from "zod";
+import type { ZodObject, z } from "zod";
 
 export type IOnUpdateTableOptions = {
   page: 1;
@@ -37,13 +37,13 @@ type IEntryTableHeadersSecond<ITEM> = DataTableHeader<ItemType<ITEM[]>>;
 type IOutputTableHeader<ITEM> = DataTableHeader<ItemType<ITEM[]>>;
 
 export const useTableService = <
-  ITEM_SCHEMA extends AnyZodObject,
-  ITEM extends z.infer<ITEM_SCHEMA>
+  ITEM_SCHEMA extends ZodObject,
+  ITEM extends z.infer<ITEM_SCHEMA>,
 >(
-  schema: ITEM_SCHEMA
+  schema: ITEM_SCHEMA,
 ) => {
   const makeTableOptions = (
-    entryOptions: Partial<IEntryMakeTableOptions> = {}
+    entryOptions: Partial<IEntryMakeTableOptions> = {},
   ) => {
     const options: IEntryMakeTableOptions = {
       page: 1,
@@ -57,7 +57,7 @@ export const useTableService = <
     const search = ref(options.search);
     const hasMore = ref(true);
     const updateOptionsFromNewResponse = <RESPONSE extends IResponseShape>(
-      response: RESPONSE | AnyObject
+      response: RESPONSE | AnyObject,
     ) => {
       totalItems.value = response.totalCounts;
       hasMore.value = response.hasMore;
@@ -90,7 +90,7 @@ export const useTableService = <
   };
   const makeFinallyHeaders = <DATA>(
     header1: IEntryTableHeaders<DATA>[],
-    header2: IEntryTableHeadersSecond<DATA>[]
+    header2: IEntryTableHeadersSecond<DATA>[],
   ) => {
     // Step 1: Concatenate arrays, header1 first for priority
     const all = [...header1, ...header2];
@@ -111,8 +111,8 @@ export const useTableService = <
       return item.visible == undefined
         ? true
         : item.visible == false
-        ? false
-        : true;
+          ? false
+          : true;
     }) as unknown as IOutputTableHeader<DATA>[];
     return { merged, output };
   };
@@ -125,7 +125,7 @@ export const useTableService = <
           key: key,
           title: value,
         };
-      }
+      },
     );
     return headers as IOutputTableHeader<ITEM>[];
   };

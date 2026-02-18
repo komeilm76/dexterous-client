@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z, ZodObject } from "zod";
 import { kmApi } from "km-api";
 import { useHttp } from "../http";
 import _ from "lodash";
@@ -12,10 +12,14 @@ type IResponseSuccessShape<DATA> = {
   statusText: string;
 };
 
-export const useApi = <CONFIG extends ReturnType<typeof kmApi.v4.makeApiConfig>>(
+export const useApi = <
+  CONFIG extends ReturnType<typeof kmApi.v4.makeApiConfig>,
+>(
   config: CONFIG,
   http_options: (v: CONFIG) => {
     cacheTime?: number | undefined;
+    limit?: number | undefined;
+    retry?: number | undefined;
   },
 ) => {
   let cachedOptions: {
@@ -27,26 +31,30 @@ export const useApi = <CONFIG extends ReturnType<typeof kmApi.v4.makeApiConfig>>
   } = {};
   let firstOptions:
     | {
-      body?: z.infer<CONFIG["request"]["body"]>;
-      params?: z.infer<CONFIG["request"]["params"]>;
-      query?: z.infer<CONFIG["request"]["query"]>;
-      cookies?: z.infer<CONFIG["request"]["cookies"]>;
-      headers?: z.infer<CONFIG["request"]["headers"]>;
-    }
+        body?: z.infer<CONFIG["request"]["body"]>;
+        params?: z.infer<CONFIG["request"]["params"]>;
+        query?: z.infer<CONFIG["request"]["query"]>;
+        cookies?: z.infer<CONFIG["request"]["cookies"]>;
+        headers?: z.infer<CONFIG["request"]["headers"]>;
+      }
     | undefined = undefined;
   const { hook, http } = useHttp();
 
   const method = hook.useRequest(
     (requestConfig: {
-      body?: z.infer<CONFIG["request"]["body"]>,
-      params?: z.infer<CONFIG["request"]["params"]>,
-      query?: z.infer<CONFIG["request"]["query"]>,
+      body?: z.infer<CONFIG["request"]["body"]>;
+      params?: z.infer<CONFIG["request"]["params"]>;
+      query?: z.infer<CONFIG["request"]["query"]>;
       cookies?: z.infer<CONFIG["request"]["cookies"]>;
       headers?: z.infer<CONFIG["request"]["headers"]>;
-      loadFromCache?: boolean | undefined,
+      loadFromCache?: boolean | undefined;
     }) => {
       const cacheTime = http_options(config).cacheTime;
-      cachedOptions = { body: requestConfig.body, params: requestConfig.params, query: requestConfig.query, };
+      cachedOptions = {
+        body: requestConfig.body,
+        params: requestConfig.params,
+        query: requestConfig.query,
+      };
 
       if (firstOptions == undefined) {
         firstOptions = _.cloneDeep({
@@ -58,19 +66,27 @@ export const useApi = <CONFIG extends ReturnType<typeof kmApi.v4.makeApiConfig>>
         });
       }
 
-      const adapterResponseType = kmApi.adapters.convertResponseType(config.responseContentType!, 'alova-axios')
+      const adapterResponseType = kmApi.adapters.convertResponseType(
+        config.responseContentType || "application/json",
+        "alova-axios",
+      );
+
       return http.Request<
         IResponseSuccessShape<z.infer<CONFIG["response"]["success"]>>
       >({
-        url: config.makeFullPath(requestConfig.params),
+        url: config.makeFullPath(requestConfig.params || {}),
         method: config.method,
         meta: {
           auth: config.auth,
         },
         data: requestConfig.body as unknown as any,
-        params: requestConfig.query || {},
-        ...(requestConfig.headers && { headers: requestConfig.headers }),
-        ...(adapterResponseType.responseType && { responseType: adapterResponseType.responseType }),
+        ...(requestConfig.query
+          ? { params: requestConfig.params }
+          : { params: {} }),
+        ...(requestConfig.headers && { headers: requestConfig.headers as any }),
+        ...(adapterResponseType.responseType && {
+          responseType: adapterResponseType.responseType,
+        }),
         ...(cacheTime == undefined ? {} : { cacheFor: cacheTime }),
         ...(requestConfig.loadFromCache == undefined
           ? {}
@@ -83,29 +99,26 @@ export const useApi = <CONFIG extends ReturnType<typeof kmApi.v4.makeApiConfig>>
   );
 
   const reloadWithLastOptions = (loadFromCache?: boolean | undefined) => {
-    method.send(
-      {
-        body: cachedOptions.body,
-        params: cachedOptions.params,
-        query: cachedOptions.query,
-        cookies: cachedOptions.cookies,
-        headers: cachedOptions.headers,
-        loadFromCache,
-      }
-    );
+    method.send({
+      body: cachedOptions.body,
+      params: cachedOptions.params,
+      query: cachedOptions.query,
+      cookies: cachedOptions.cookies,
+      headers: cachedOptions.headers,
+      loadFromCache,
+    });
   };
 
   const reloadWithFirstOptions = (loadFromCache?: boolean | undefined) => {
     if (firstOptions) {
-      method.send(
-        {
-          body: firstOptions.body,
-          params: firstOptions.params,
-          query: firstOptions.query,
-          cookies: firstOptions.cookies,
-          headers: firstOptions.headers,
-          loadFromCache,
-        });
+      method.send({
+        body: firstOptions.body,
+        params: firstOptions.params,
+        query: firstOptions.query,
+        cookies: firstOptions.cookies,
+        headers: firstOptions.headers,
+        loadFromCache,
+      });
     }
   };
 

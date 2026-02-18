@@ -1,11 +1,11 @@
-import { z, ZodArray, ZodNullable, type AnyZodObject, type output } from "zod";
+import { z, ZodArray, ZodNullable, type ZodObject, type output } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useField, useFieldArray, useForm } from "vee-validate";
 import { computed } from "vue";
 import { isEmpty } from "lodash";
-export const makeForm = <SCHEMA extends AnyZodObject>(
+export const makeForm = <SCHEMA extends ZodObject>(
   schema: SCHEMA,
-  initialValues?: Partial<z.infer<SCHEMA>>
+  initialValues?: Partial<z.infer<SCHEMA>>,
 ) => {
   const formSchema = toTypedSchema(schema);
   const form = useForm({

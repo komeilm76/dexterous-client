@@ -5,7 +5,7 @@ const config = kmIcon.fontawesome.makeConfig({
   familyGroup: {
     classic: true,
     duotone: true,
-    sharp: false,
+    sharp: true,
     "sharp-duotone": false,
     chisel: false,
     etch: false,
@@ -19,7 +19,7 @@ const config = kmIcon.fontawesome.makeConfig({
   weight: {
     solid: true,
     regular: false,
-    light: false,
+    light: true,
     thin: false,
   },
 });

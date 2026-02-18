@@ -12,56 +12,7 @@ import { fileURLToPath, URL } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 
 // import mkcert from "vite-plugin-mkcert";
-// import { useManifest } from "km-manifest";
-// const m = useManifest();
 
-// m.makeManifest({
-//   name: "Dexterous Client",
-//   short_name: "Dexterous Client",
-//   icons: [
-//     {
-//       src: "/src/assets/media/pwa/logo.png",
-//       type: "image/png",
-//       sizes: "1024x1024",
-//     },
-//   ],
-//   screenshots: [
-//     {
-//       src: "/src/assets/media/pwa/Screenshot-376x320.png",
-//       sizes: "376x320",
-//       form_factor: "wide",
-//       type: "image/png",
-//     },
-//     {
-//       src: "/src/assets/media/pwa/screencapture-1170x2532_1.png",
-//       sizes: "1170x2532",
-//       form_factor: "narrow",
-//       type: "image/png",
-//     },
-//     {
-//       src: "/src/assets/media/pwa/screencapture-1170x2532_2.png",
-//       sizes: "1170x2532",
-//       form_factor: "narrow",
-//       type: "image/png",
-//     },
-//     {
-//       src: "/src/assets/media/pwa/screencapture-1170x2532_3.png",
-//       sizes: "1170x2532",
-//       form_factor: "narrow",
-//       type: "image/png",
-//     },
-//   ],
-//   background_color: "#078af7",
-//   theme_color: "#078af7",
-//   description: "Dexterous Client Application",
-//   id: "/?source=pwa",
-//   start_url: "/?source=pwa",
-//   display: "standalone",
-//   scope: "/",
-//   launch_handler: {
-//     client_mode: "focus-existing",
-//   },
-// }).jsonFile({ path: "/src/pwa/config" });
 // https://vitejs.dev/config/
 
 export default defineConfig({
