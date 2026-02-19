@@ -12,9 +12,12 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AuthLayout: typeof import('./components/layout/AuthLayout.vue')['default']
+    copy: typeof import('./components/base/Toast copy.vue')['default']
     FontProvider: typeof import('./components/provider/FontProvider.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SingleTabChannelProvider: typeof import('./components/provider/SingleTabChannelProvider.vue')['default']
+    Toast: typeof import('./components/base/Toast.vue')['default']
+    ToastItem: typeof import('./components/base/ToastItem.vue')['default']
   }
 }

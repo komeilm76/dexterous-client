@@ -1,5 +1,8 @@
 <template>
-  <FontProvider :font-family="setting.currentFont.key" :write-on-outside-of-app="true">
+  <FontProvider
+    :font-family="setting.currentFont.key"
+    :write-on-outside-of-app="true"
+  >
     <VLocaleProvider :locale="setting.currentLanguage?.key">
       <VThemeProvider :theme="setting.currentTheme">
         <v-app :class="{ [`theme-${setting.currentTheme}`]: true }">
@@ -14,16 +17,11 @@
   </FontProvider>
 </template>
 
-
 <script lang="ts" setup>
-import { onMounted } from 'vue';
-import FontProvider from './components/provider/FontProvider.vue';
-import { useAppSetting } from './stores/application/setting';
-const setting = useAppSetting()
+import { onMounted } from "vue";
+import FontProvider from "./components/provider/FontProvider.vue";
+import { useAppSetting } from "./stores/application/setting";
+const setting = useAppSetting();
 
-
-onMounted(() => {
-})
-
-
+onMounted(() => {});
 </script>
