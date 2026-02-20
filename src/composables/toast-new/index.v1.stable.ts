@@ -7,57 +7,13 @@ import { useCountdown } from "@vueuse/core";
 import { useAppToast } from "@/stores/application/toast";
 import tools from "@/tools";
 
-/**
- * Schema for toast notification types
- * Defines the allowed toast types: success, info, error, or warning
- */
 const toastType = z.literal(["success", "info", "error", "warning"]);
 
-/**
- * Schema for toast location positioning
- * Defines where the toast should appear on screen
- * @property {('left'|'right'|'center')} x - Horizontal position
- * @property {('top'|'bottom'|'center')} y - Vertical position
- */
 const locationSchema = z.object({
   x: z.enum(["left", "right", "center"]),
   y: z.enum(["top", "bottom", "center"]),
 });
 
-/**
- * Schema for toast entry configuration
- * Defines the structure for creating a new toast notification
- *
- * @typedef {Object} IEntryToast
- * @property {string} title - The main title text of the toast
- * @property {string[]} [messages] - Optional array of additional message lines
- * @property {Object} [actions] - Optional action buttons for the toast
- * @property {Object} [location] - Optional positioning configuration
- * @property {string} [color] - Optional custom color for the toast
- * @property {('success'|'info'|'error'|'warning')} [type] - Optional toast type
- * @property {number} [showTime] - Optional duration in milliseconds to show the toast
- * @property {number} [showMessageDelay] - Optional delay before showing messages
- *
- * @example
- * const myToast = {
- *   title: "Operation Successful",
- *   messages: ["File has been uploaded", "Processing will begin shortly"],
- *   type: "success",
- *   showTime: 5000,
- *   actions: {
- *     view: {
- *       label: "View Details",
- *       variant: "elevated",
- *       entryTask: ({ setLoadingValue, stop }) => {
- *         setLoadingValue(true);
- *         // Perform action...
- *         setLoadingValue(false);
- *         stop();
- *       }
- *     }
- *   }
- * };
- */
 const entryToast = z.object({
   title: z.string(),
   messages: z.string().array().optional(),
@@ -92,26 +48,6 @@ const entryToast = z.object({
 type IEntryToast = z.infer<typeof entryToast>;
 export type IToast = ReturnType<typeof _makeToast<IEntryToast>>;
 
-/**
- * Internal function to create a toast instance with all lifecycle methods
- * Transforms an entry toast configuration into a fully functional toast object
- *
- * @private
- * @template ENTRY_TOAST
- * @param {ENTRY_TOAST} entryToast - The toast configuration object
- * @param {IToastServiceOptions} options - Service-level configuration options
- * @returns {IToast} A complete toast object with methods for control and state management
- *
- * @description
- * This function:
- * - Generates a unique ID for the toast
- * - Sets up countdown timer for auto-dismiss
- * - Processes action buttons with loading states
- * - Manages toast lifecycle (not-started -> active -> finished)
- * - Provides pause/resume/stop controls
- * - Tracks save status for toast history
- * - Calculates remaining time percentage for progress display
- */
 const _makeToast = <ENTRY_TOAST extends IEntryToast>(
   entryToast: ENTRY_TOAST,
   options: IToastServiceOptions,
@@ -254,27 +190,14 @@ const _makeToast = <ENTRY_TOAST extends IEntryToast>(
   return output;
 };
 
-type IToastActionOutout = {
-  label: string;
-  task: () => void;
-  loading: ReturnType<typeof ref<boolean>>;
-};
+// type IOutputToast = z.infer<typeof outputSchema>;
 
-/**
- * Type definition for internal event communication
- * Used by the RxJS Subject to manage toast lifecycle events
- *
- * @typedef {Object} ICheckerEventData
- * @property {string} eventType - The type of event being triggered
- *
- * Event types:
- * - "please_add_to_list": Add toast to queue
- * - "please_show": Display toast immediately
- * - "please_retry_show": Try showing next toast in queue
- * - "please_hide": Hide a specific toast
- * - "please_save": Save toast to history
- * - "please_delete_from_saved": Remove toast from history
- */
+// type IToastActionOutout = {
+//   label: string;
+//   task: () => void;
+//   loading: ReturnType<typeof ref<boolean>>;
+// };
+
 type ICheckerEventData =
   | {
       eventType: "please_add_to_list";
@@ -298,16 +221,6 @@ type ICheckerEventData =
       data: IToast["id"];
     };
 
-/**
- * Configuration options for the toast service
- *
- * @typedef {Object} IToastServiceOptions
- * @property {number} maxShow - Maximum number of toasts to display simultaneously
- * @property {number} defaultInterval - Interval in milliseconds for countdown timer updates
- * @property {number} defaultShowTime - Default duration in milliseconds to show each toast
- * @property {('success'|'info'|'error'|'warning')} defaultType - Default toast type
- * @property {Subject<ICheckerEventData>} checker - RxJS Subject for internal event management
- */
 export type IToastServiceOptions = {
   maxShow: number;
   defaultInterval: number;
@@ -316,89 +229,6 @@ export type IToastServiceOptions = {
   checker: Subject<ICheckerEventData>;
 };
 
-/**
- * Creates and configures a toast notification service
- * This is the main factory function for the toast system
- *
- * @param {Partial<IToastServiceOptions>} entryOptions - Optional configuration overrides
- * @returns {Object} Toast service with methods and computed lists
- * @returns {Function} returns.show - Function to display a new toast
- * @returns {ComputedRef<IToast[]>} returns.activeList - Currently displayed toasts
- * @returns {ComputedRef<IToast[]>} returns.notStartedList - Toasts waiting in queue
- * @returns {ComputedRef<IToast[]>} returns.finishedList - Completed toasts
- *
- * @example
- * // Basic setup with defaults
- * const toastService = makeToastService({});
- *
- * // Show a simple toast
- * toastService.show({
- *   title: "Welcome!",
- *   type: "info"
- * });
- *
- * @example
- * // Advanced setup with custom options
- * const toastService = makeToastService({
- *   maxShow: 3,
- *   defaultShowTime: 5000,
- *   defaultType: "success"
- * });
- *
- * // Show toast with actions and messages
- * toastService.show({
- *   title: "File Upload Complete",
- *   messages: [
- *     "document.pdf has been uploaded successfully",
- *     "Processing will take approximately 2 minutes"
- *   ],
- *   type: "success",
- *   showTime: 6000,
- *   location: { x: "right", y: "top" },
- *   actions: {
- *     view: {
- *       label: "View File",
- *       variant: "elevated",
- *       entryTask: ({ setLoadingValue, stop }) => {
- *         setLoadingValue(true);
- *         // Navigate to file
- *         setTimeout(() => {
- *           setLoadingValue(false);
- *           stop();
- *         }, 1000);
- *       }
- *     },
- *     dismiss: {
- *       label: "Dismiss",
- *       variant: "text",
- *       entryTask: ({ stop }) => {
- *         stop();
- *       }
- *     }
- *   }
- * });
- *
- * @example
- * // Access toast lists
- * watch(toastService.activeList, (toasts) => {
- *   console.log(`Currently showing ${toasts.length} toasts`);
- * });
- *
- * @description
- * The toast service manages a queue of notifications with these features:
- * - Automatic queuing when max simultaneous toasts exceeded
- * - Countdown timers with pause/resume capability
- * - Action buttons with loading states
- * - Toast history persistence
- * - Customizable positioning and styling
- * - Event-driven architecture using RxJS
- *
- * Default values:
- * - maxShow: 4
- * - defaultInterval: 80ms
- * - defaultShowTime: 4000ms (4 seconds)
- * - defaultType: "info"
- */
 export const makeToastService = (
   entryOptions: Partial<IToastServiceOptions>,
 ) => {
