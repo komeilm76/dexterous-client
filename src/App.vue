@@ -5,13 +5,13 @@
   >
     <VLocaleProvider :locale="setting.currentLanguage?.key">
       <VThemeProvider :theme="setting.currentTheme">
-        <v-app :class="{ [`theme-${setting.currentTheme}`]: true }">
-          <v-main>
+        <VApp :class="{ [`theme-${setting.currentTheme}`]: true }">
+          <VMain>
             <template #default>
               <router-view />
             </template>
-          </v-main>
-        </v-app>
+          </VMain>
+        </VApp>
       </VThemeProvider>
     </VLocaleProvider>
   </FontProvider>
@@ -21,6 +21,12 @@
 import { onMounted } from "vue";
 import FontProvider from "./components/provider/FontProvider.vue";
 import { useAppSetting } from "./stores/application/setting";
+import {
+  VApp,
+  VLocaleProvider,
+  VMain,
+  VThemeProvider,
+} from "vuetify/components";
 const setting = useAppSetting();
 
 onMounted(() => {});

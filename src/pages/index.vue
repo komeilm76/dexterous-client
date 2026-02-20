@@ -45,76 +45,113 @@
           item-title="name"
         ></VSelect>
       </VCol>
-      <VCard class="w-full">
-        <VCardTitle>Card</VCardTitle>
-        <VDivider></VDivider>
-        <VCardText>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
-          placeat tempora at quia molestiae aspernatur distinctio!
-        </VCardText>
-        <VDivider></VDivider>
-        <VCardActions>
-          <VBtn color="primary">YES</VBtn>
-          <VBtn color="secondary">NO</VBtn>
-          <VBtn color="error">NO</VBtn>
-          <VBtn color="info">NO</VBtn>
-          <VBtn color="success">NO</VBtn>
-          <VBtn color="warning">NO</VBtn>
-        </VCardActions>
-        <VBtn
-          @click="
-            appToast.service?.show({
-              title: 'salam',
-              type: 'success',
-              location: { y: 'bottom', x: 'left' },
-              messages: ['salam aleykom', 'hale shoma chetore ?'],
-              showMessageDelay: 300,
-            })
-          "
-          >error bottom left</VBtn
-        >
-        <VBtn
-          @click="
-            appToast.service?.show({
-              title: 'salam',
-              type: 'info',
-              location: { y: 'bottom', x: 'right' },
-              messages: ['salam aleykom', 'hale shoma chetore ?'],
-              showMessageDelay: 0,
-            })
-          "
-          >error bottom right</VBtn
-        >
-        <VBtn
-          @click="
-            appToast.service?.show({
-              title: 'salam',
-              type: 'warning',
-              location: { y: 'top', x: 'left' },
-            })
-          "
-          >error top left</VBtn
-        >
-        <VBtn
-          @click="
-            appToast.service?.show({
-              title: 'salam',
-              type: 'error',
-              location: { y: 'top', x: 'right' },
-            })
-          "
-          >error top right</VBtn
-        >
-
-        <div>
-          {{ useAppToast().getSavedToast() }}
-        </div>
-
-        <!-- <div>
-          <div> finished: {{ toast.finishedList.value.length }}</div>
-          <div v-for="item in toast.finishedList.value">{{ item }}</div>
-        </div> -->
-      </VCard>
+      <VCol cols="12">
+        <VCard class="w-full">
+          <VCardTitle>Card</VCardTitle>
+          <VDivider></VDivider>
+          <VCardText>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
+            placeat tempora at quia molestiae aspernatur distinctio!
+          </VCardText>
+          <VDivider></VDivider>
+          <VCardActions>
+            <VBtn color="primary">YES</VBtn>
+            <VBtn color="secondary">NO</VBtn>
+            <VBtn color="error">NO</VBtn>
+            <VBtn color="info">NO</VBtn>
+            <VBtn color="success">NO</VBtn>
+            <VBtn color="warning">NO</VBtn>
+          </VCardActions>
+          <VBtn
+            @click="
+              appToast.service?.show({
+                title: 'Authentcation Error',
+                type: 'error',
+                location: { y: 'bottom', x: 'left' },
+                messages: [
+                  'salam aleykom',
+                  'hale shoma chetore ?',
+                  '[vite] hot updated: /src/components/base/ToastItem.vue',
+                  `observer called please_add_to_list
+  index.ts:264 observer called please_show
+  index.ts:264 observer called please_retry_show
+  index.ts:264 observer called please_add_to_list`,
+                ],
+                showMessageDelay: 0,
+                showTime: 8000,
+                actions: {
+                  save: {
+                    label: 'Save',
+                    variant: 'tonal',
+                    entryTask: async ({ setLoadingValue, pause, resume }) => {
+                      setLoadingValue(true);
+                      pause();
+                      await tools.time.wait(1000);
+                      console.log('Go function clicked');
+                      setLoadingValue(false);
+                      resume();
+                    },
+                  },
+                  send: {
+                    label: 'Send',
+                    variant: 'tonal',
+                    entryTask: async ({ setLoadingValue, stop }) => {
+                      setLoadingValue(true);
+                      await tools.time.wait(1000);
+                      console.log('Go function clicked');
+                      setLoadingValue(false);
+                      stop();
+                    },
+                  },
+                  feedback: {
+                    label: 'Feedback',
+                    variant: 'tonal',
+                    entryTask: async ({ setLoadingValue }) => {
+                      setLoadingValue(true);
+                      await tools.time.wait(1000);
+                      console.log('Go function clicked');
+                      setLoadingValue(false);
+                    },
+                  },
+                },
+              })
+            "
+            >error bottom left</VBtn
+          >
+          <VBtn
+            @click="
+              appToast.service?.show({
+                title: 'salam',
+                type: 'info',
+                location: { y: 'bottom', x: 'right' },
+                messages: ['salam aleykom', 'hale shoma chetore ?'],
+                showMessageDelay: 0,
+              })
+            "
+            >error bottom right</VBtn
+          >
+          <VBtn
+            @click="
+              appToast.service?.show({
+                title: 'salam',
+                type: 'warning',
+                location: { y: 'top', x: 'left' },
+              })
+            "
+            >error top left</VBtn
+          >
+          <VBtn
+            @click="
+              appToast.service?.show({
+                title: 'salam',
+                type: 'success',
+                location: { y: 'top', x: 'right' },
+              })
+            "
+            >error top right</VBtn
+          >
+        </VCard>
+      </VCol>
     </VRow>
   </VContainer>
 </template>
@@ -124,10 +161,20 @@ import { useApiSchemas } from "@/apis";
 import { useApi } from "@/composables/api";
 // import { useToast } from '@/composables/toast-new';
 import { useAppSetting } from "@/stores/application/setting";
-import kmIcon from "km-icon";
 import _ from "lodash";
-import { onMounted, ref, type Ref } from "vue";
-import { VProgressLinear } from "vuetify/components";
+import { onMounted, ref } from "vue";
+import {
+  VBtn,
+  VCard,
+  VCardActions,
+  VCardText,
+  VCardTitle,
+  VCol,
+  VContainer,
+  VDivider,
+  VRow,
+  VSelect,
+} from "vuetify/components";
 import tools from "@/tools";
 import { useAppToast } from "@/stores/application/toast";
 import Toast from "@/components/base/Toast.vue";

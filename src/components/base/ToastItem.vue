@@ -5,20 +5,36 @@
         v-for="item in props.list"
         :key="item.id"
         density="compact"
-        :color="item.type"
         variant="elevated"
-        width="270"
+        max-width="320"
+        min-width="280"
         class="mt-1"
+        :color="item.type"
       >
-        <VCardTitle class="px-1 py-1 w-full">
+        <VCardTitle class="px-2 py-2 w-full">
           <div class="flex w-full items-center justify-start">
-            <VBtn class="me-1" size="x-small" icon flat variant="tonal">
-              <VIcon>
-                <i class="fa fa-light fa-check"></i>
+            <VAvatar class="me-1 p-2!" flat variant="text" :size="'small'">
+              <VIcon size="small">
+                <i
+                  v-if="item.type == 'success'"
+                  class="fa fa-sharp-duotone fa-thin fa-circle-check"
+                ></i>
+                <i
+                  v-else-if="item.type == 'error'"
+                  class="fa fa-sharp-duotone fa-thin fa-circle-xmark"
+                ></i>
+                <i
+                  v-else-if="item.type == 'info'"
+                  class="fa fa-sharp-duotone fa-thin fa-circle-info"
+                ></i>
+                <i
+                  v-else-if="item.type == 'warning'"
+                  class="fa fa-sharp-duotone fa-thin fa-triangle-exclamation"
+                ></i>
               </VIcon>
-            </VBtn>
+            </VAvatar>
             <span
-              class="font-normal me-1 text-ellipsis shrink overflow-hidden"
+              class="font-bold me-1 text-ellipsis shrink overflow-hidden text-sm"
               >{{ item.title }}</span
             >
             <VSpacer></VSpacer>
@@ -75,7 +91,7 @@
           chunk-gap="2"
           height="2"
         ></VProgressLinear>
-        <VDivider></VDivider>
+        <!-- <VDivider></VDivider> -->
         <template v-if="item.showMessageDelay > 0">
           <VExpandTransition :key="item.id">
             <VCardText
@@ -84,11 +100,14 @@
             >
               <div class="mx-2! my-1">
                 <div
-                  class="mb-2 whitespace-nowrap"
+                  class="whitespace-normal flex items-start justify-center [&>*]:leading-4! mb-1"
                   v-for="message in item.messages"
                   :key="message"
                 >
-                  {{ message }}
+                  <i class="fa fa-solid fa-dot fa-fw"></i>
+                  <span class="w-full font-mono! text-[10px]! font-light">
+                    {{ message }}
+                  </span>
                 </div>
               </div>
             </VCardText>
@@ -96,13 +115,16 @@
         </template>
         <template v-else>
           <VCardText class="m-0! p-0!" v-if="item.messages.length > 0">
-            <div class="mx-2! my-1">
+            <div class="mx-2! my-1!">
               <div
-                class="mb-2 whitespace-nowrap"
+                class="whitespace-normal flex items-start justify-center [&>*]:leading-4! mb-1!"
                 v-for="message in item.messages"
                 :key="message"
               >
-                {{ message }}
+                <i class="fa fa-solid fa-dot fa-fw"></i>
+                <span class="w-full font-mono! text-[10px]! font-light">
+                  {{ message }}
+                </span>
               </div>
             </div>
           </VCardText>
@@ -110,8 +132,9 @@
 
         <template v-if="Object.keys(item.actions).length > 0">
           <VDivider></VDivider>
-          <VCardActions>
+          <VCardActions class="px-1! py-1!">
             <VBtn
+              size="small"
               v-for="(action, index) in item.actions"
               @click="() => action.task()"
               :loading="action.loading"

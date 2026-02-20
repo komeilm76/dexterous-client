@@ -29,6 +29,9 @@ const entryToast = z.object({
           input: [
             z.object({
               setLoadingValue: z.function({ input: [z.boolean()] }),
+              pause: z.function(),
+              resume: z.function(),
+              stop: z.function(),
             }),
           ],
         }),
@@ -70,6 +73,9 @@ const _makeToast = <ENTRY_TOAST extends IEntryToast>(
           setLoadingValue: (v) => {
             loading.value = v;
           },
+          pause:pause,
+          resume:resume,
+          stop:stop
         });
       },
       variant: element?.variant || "elevated",
