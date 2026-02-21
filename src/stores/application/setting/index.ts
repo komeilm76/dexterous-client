@@ -15,6 +15,14 @@ import palette from "./palette";
 import { useBroadcastChannel } from "@vueuse/core";
 import type { IPaletteType } from "@/micro-modules/palette/palette-types";
 
+type JwtPayload = {
+  exp?: number;
+  iat?: number;
+  sub?: string;
+  role?: "admin" | "operator";
+  [key: string]: any;
+};
+
 type IAppSettingChanges =
   | { key: "theme-mode"; value: IThemeModeType }
   | { key: "palette"; value: IPaletteType }
@@ -73,6 +81,16 @@ export const useAppSetting = defineStore(
       return `${paletteKey}-${themeModeKey}` as const;
     });
 
+    const getParsedToken = () => {
+      return undefined;
+      return {
+        exp: 1,
+        iat: 1,
+        sub: "",
+        role: "operator",
+      } as JwtPayload | undefined;
+    };
+
     const sideBarMenu = ref(false);
 
     const { post, data } = useBroadcastChannel<
@@ -127,6 +145,7 @@ export const useAppSetting = defineStore(
       currentTheme,
       statics: _statics,
       defaults: _defaults,
+      getParsedToken,
     };
   },
   {

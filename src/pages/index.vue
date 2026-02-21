@@ -179,6 +179,12 @@ import tools from "@/tools";
 import { useAppToast } from "@/stores/application/toast";
 import Toast from "@/components/base/Toast.vue";
 
+definePage({
+  meta: {
+    whoCanAccessThisRoute: ["public"],
+  },
+});
+
 const appToast = useAppToast();
 
 const setting = useAppSetting();

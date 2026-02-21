@@ -1,13 +1,10 @@
 <template>
-    <VCard>
-        <VCardTitle>Register</VCardTitle>
-        <VCardActions>
-            <VBtn :to="'/auth/login'" variant="tonal">
-                <span>Go To login Page</span>
-                <VIcon>mdi-chevron-right</VIcon>
-            </VBtn>
-        </VCardActions>
-    </VCard>
+    register page
 </template>
-<script setup lang="ts"></script>
-<style lang="sass" scoped></style>
+<script setup lang="ts">
+definePage({
+  meta: {
+    whoCanAccessThisRoute: ["guest"],
+  },
+});
+</script>

@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { VTextField } from "vuetify/components";
+definePage({
+  meta: {
+    whoCanAccessThisRoute: ["public"],
+  },
+});
 </script>
 
 <template>
