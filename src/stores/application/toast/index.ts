@@ -1,4 +1,4 @@
-import { makeToastService, type IToast } from "@/composables/toast-new";
+import { makeToastService, type IToast } from "@/composables/toast";
 import _ from "lodash";
 import { defineStore } from "pinia";
 import { ref } from "vue";

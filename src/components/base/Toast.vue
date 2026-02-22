@@ -3,16 +3,16 @@
     <!-- <div>activeList:{{ appToast.service.activeList }}</div> -->
     <!-- <div>finishedList:{{ appToast.service.finishedList }}</div> -->
     <!-- <div>notStartedList:{{ appToast.service.notStartedList }}</div> -->
-    <div class="fixed top-0 right-0 p-1! z-10">
+    <div class="fixed top-0 right-0 p-1! z-[100]">
       <ToastItem :list="activeInTopRight"></ToastItem>
     </div>
-    <div class="fixed top-0 left-0 p-1! z-10">
+    <div class="fixed top-0 left-0 p-1! z-[100]">
       <ToastItem :list="activeInTopLeft"></ToastItem>
     </div>
-    <div class="fixed bottom-0 right-0 p-1! z-10">
+    <div class="fixed bottom-0 right-0 p-1! z-[100]">
       <ToastItem :list="activeInBottomRight"></ToastItem>
     </div>
-    <div class="fixed bottom-0 left-0 p-1! z-10">
+    <div class="fixed bottom-0 left-0 p-1! z-[100]">
       <ToastItem :list="activeInBottomLeft"></ToastItem>
     </div>
     <!-- <VExpandTransition group>
@@ -97,19 +97,15 @@
             </div>
           </VCardText>
         </template>
-        <VDivider></VDivider>
-        <VCardActions>
-          <VBtn
-            v-for="(action, index) in item.actions"
-            @click="() => action.task()"
-            :loading="action.loading"
-          >
-            {{ action.label }}
-          </VBtn>
-        </VCardActions>
-        <VCardText>{{ item.actions }}</VCardText>
-      </VCard>
-    </VExpandTransition> -->
+<VDivider></VDivider>
+<VCardActions>
+  <VBtn v-for="(action, index) in item.actions" @click="() => action.task()" :loading="action.loading">
+    {{ action.label }}
+  </VBtn>
+</VCardActions>
+<VCardText>{{ item.actions }}</VCardText>
+</VCard>
+</VExpandTransition> -->
   </div>
 </template>
 
@@ -117,7 +113,7 @@
 import {
   makeToastService,
   type IToastServiceOptions,
-} from "@/composables/toast-new";
+} from "@/composables/toast";
 import { useAppToast } from "@/stores/application/toast";
 import { computed, onMounted } from "vue";
 import {
@@ -190,6 +186,5 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.toast-component {
-}
+.toast-component {}
 </style>

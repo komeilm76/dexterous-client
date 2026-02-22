@@ -1,8 +1,5 @@
 <template>
-  <FontProvider
-    :font-family="setting.currentFont.key"
-    :write-on-outside-of-app="true"
-  >
+  <FontProvider :font-family="setting.currentFont.key" :write-on-outside-of-app="true">
     <VLocaleProvider :locale="setting.currentLanguage?.key">
       <VThemeProvider :theme="setting.currentTheme">
         <VApp :class="{ [`theme-${setting.currentTheme}`]: true }">
@@ -29,5 +26,5 @@ import {
 } from "vuetify/components";
 const setting = useAppSetting();
 
-onMounted(() => {});
+onMounted(() => { });
 </script>

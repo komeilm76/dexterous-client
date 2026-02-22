@@ -12,16 +12,11 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import type { IThemeModeType } from "./theme/types";
 import theme from "./theme";
 import palette from "./palette";
-import { useBroadcastChannel } from "@vueuse/core";
+import { useBroadcastChannel, usePreferredColorScheme } from "@vueuse/core";
 import type { IPaletteType } from "@/micro-modules/palette/palette-types";
+import { useAppJwt } from "@/stores/application/jwt";
 
-type JwtPayload = {
-  exp?: number;
-  iat?: number;
-  sub?: string;
-  role?: "admin" | "operator";
-  [key: string]: any;
-};
+const preferredColor = usePreferredColorScheme();
 
 type IAppSettingChanges =
   | { key: "theme-mode"; value: IThemeModeType }
@@ -78,17 +73,20 @@ export const useAppSetting = defineStore(
     const currentTheme = computed(() => {
       const paletteKey = currentPalette.value?.key as IPaletteType;
       const themeModeKey = currentThemeMode.value?.key as IThemeModeType;
-      return `${paletteKey}-${themeModeKey}` as const;
+
+      if (themeModeKey == "system") {
+        if (preferredColor.value == "no-preference") {
+          return `${paletteKey}-${"light"}`;
+        } else {
+          return `${paletteKey}-${preferredColor.value}` as const;
+        }
+      } else {
+        return `${paletteKey}-${themeModeKey}` as const;
+      }
     });
 
     const getParsedToken = () => {
-      return undefined;
-      return {
-        exp: 1,
-        iat: 1,
-        sub: "",
-        role: "operator",
-      } as JwtPayload | undefined;
+      return useAppJwt().payload || undefined;
     };
 
     const sideBarMenu = ref(false);

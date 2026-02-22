@@ -27,8 +27,7 @@ declare module 'vue-router/auto-routes' {
     '/dashboard/admin/': RouteRecordInfo<'/dashboard/admin/', '/dashboard/admin', Record<never, never>, Record<never, never>>,
     '/dashboard/operator/': RouteRecordInfo<'/dashboard/operator/', '/dashboard/operator', Record<never, never>, Record<never, never>>,
     '/example': RouteRecordInfo<'/example', '/example', Record<never, never>, Record<never, never>>,
-    '/log': RouteRecordInfo<'/log', '/log', Record<never, never>, Record<never, never>, '/log/404' | '/log/[...path]' | '/log/forbidden'>,
-    '/log/[...path]': RouteRecordInfo<'/log/[...path]', '/log/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
+    '/log': RouteRecordInfo<'/log', '/log', Record<never, never>, Record<never, never>, '/log/404' | '/log/forbidden'>,
     '/log/404': RouteRecordInfo<'/log/404', '/log/404', Record<never, never>, Record<never, never>>,
     '/log/forbidden': RouteRecordInfo<'/log/forbidden', '/log/forbidden', Record<never, never>, Record<never, never>>,
   }
@@ -81,12 +80,8 @@ declare module 'vue-router/auto-routes' {
       views: never
     }
     'src/pages/log.vue': {
-      routes: '/log' | '/log/[...path]' | '/log/404' | '/log/forbidden'
+      routes: '/log' | '/log/404' | '/log/forbidden'
       views: 'default'
-    }
-    'src/pages/log/[...path].vue': {
-      routes: '/log/[...path]'
-      views: never
     }
     'src/pages/log/404.vue': {
       routes: '/log/404'
