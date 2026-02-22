@@ -3,16 +3,16 @@
     <!-- <div>activeList:{{ appToast.service.activeList }}</div> -->
     <!-- <div>finishedList:{{ appToast.service.finishedList }}</div> -->
     <!-- <div>notStartedList:{{ appToast.service.notStartedList }}</div> -->
-    <div class="fixed top-0 right-0 p-1! z-[100]">
+    <div class="fixed top-0 right-0 p-1! z-[10000]">
       <ToastItem :list="activeInTopRight"></ToastItem>
     </div>
-    <div class="fixed top-0 left-0 p-1! z-[100]">
+    <div class="fixed top-0 left-0 p-1! z-[10000]">
       <ToastItem :list="activeInTopLeft"></ToastItem>
     </div>
-    <div class="fixed bottom-0 right-0 p-1! z-[100]">
+    <div class="fixed bottom-0 right-0 p-1! z-[10000]">
       <ToastItem :list="activeInBottomRight"></ToastItem>
     </div>
-    <div class="fixed bottom-0 left-0 p-1! z-[100]">
+    <div class="fixed bottom-0 left-0 p-1! z-[10000]">
       <ToastItem :list="activeInBottomLeft"></ToastItem>
     </div>
     <!-- <VExpandTransition group>

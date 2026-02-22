@@ -463,7 +463,9 @@ export const makeToastService = (
    * Called after each toast finishes to prevent unbounded memory growth.
    */
   const pruneFinished = () => {
-    const finished = list.value.filter((item) => (item.status as any).value === "finished");
+    const finished = list.value.filter(
+      (item) => (item.status as any).value === "finished",
+    );
     if (finished.length > options.maxHold) {
       const toRemove = finished.slice(0, finished.length - options.maxHold);
       const removeIds = new Set(toRemove.map((t) => t.id));
@@ -528,9 +530,10 @@ export const makeToastService = (
     });
   });
   const finishedList = computed(() => {
-    return list.value.filter((item) => {
+    const finishedList = list.value.filter((item) => {
       return item.status == "finished";
     });
+    return _.takeRight(finishedList, 200);
   });
   return { show, activeList, notStartedList, finishedList };
 };

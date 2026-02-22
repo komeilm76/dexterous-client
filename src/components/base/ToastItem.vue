@@ -103,6 +103,8 @@ import {
   VCardTitle,
   VDivider,
   VExpandTransition,
+  VExpandXTransition,
+  VFabTransition,
   VIcon,
   VProgressLinear,
   VSlideYTransition,

@@ -2,8 +2,13 @@
   <VContainer>
     <VRow>
       <VCol cols="12">
-        <Toast></Toast>
+        <Toast :max-show="10"></Toast>
       </VCol>
+      <div>
+        {{
+          appJwt.payload
+        }}
+      </div>
     </VRow>
     <VRow align="center" justify="center">
       <VCol cols="6">
@@ -113,6 +118,7 @@
               location: { y: 'bottom', x: 'right' },
               messages: ['salam aleykom', 'hale shoma chetore ?'],
               showMessageDelay: 0,
+              showTime: 2000,
             })
             ">error bottom right</VBtn>
           <VBtn @click="
@@ -158,6 +164,7 @@ import tools from "@/tools";
 import { useAppToast } from "@/stores/application/toast";
 import Toast from "@/components/base/Toast.vue";
 import { useDisplay } from "@/composables/display";
+import { useAppJwt } from "@/stores/application/jwt";
 
 definePage({
   meta: {
@@ -177,8 +184,11 @@ const api = useApi(apiSchema.getOrigin.config, (v) => {
 });
 
 const display = useDisplay()
-
+const appJwt = useAppJwt()
 onMounted(() => {
+  setTimeout(() => {
+    appJwt.login('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImF1ZCI6Imx5bngtZmFjZS1hdXRoIiwiaXNzIjoibHlueC1mYWNlLWF1dGgiLCJleHAiOjE3NzE3NzU3Nzd9.qKsUeB93nyiQ-eC_-7jvJ6d9o25uC7DmPbnB4AhvaiY')
+  }, 3000);
 });
 
 const loadingFeedback = ref<boolean>(false);
