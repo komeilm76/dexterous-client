@@ -21,5 +21,7 @@
         "fa": true
       }
     }
-  }
+  },
+  "appVersion": "0.0.2",
+  "buildHash": "6de939fe-2a5c-4ab3-9c74-f75ba224e3f8"
 }

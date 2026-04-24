@@ -1,118 +1,121 @@
 import type { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
-import { useAppSetting } from "@/stores/application/setting";
+import { useAppJwt } from "@/stores/application/jwt";
+import type { AccessRole } from "@/plugins/router";
 
 /**
- * Type definitions for route access control
- */
-type IRole = "admin" | "operator" | "guest" | "public";
-
-type IMeta = {
-  whoCanAccessThisRoute?: IRole[];
-};
-
-/**
- * Navigation guard for route access control based on user authentication and role
+ * Navigation guard for route access control based on user authentication and role.
  *
- * Access rules:
- * - 'admin': User must have valid auth token with role 'admin'
- * - 'operator': User must have valid auth token with role 'operator'
- * - 'guest': User must NOT have auth token (unauthenticated users only)
- * - 'public': Anyone can access (authenticated or not)
+ * Route meta field: `access_roles?: AccessRole[]`
  *
- * Redirects:
- * - If access is forbidden → '/log/forbidden'
- * - If route doesn't exist → '/log/404'
+ * Access rules
+ * ────────────
+ * "public"   → everyone (authenticated or not) can access to this route
+ * "guest"    → only unauthenticated users (no token OR expired token)
+ *              authenticated users are redirected to their /admin
+ * "admin"    → valid, authorized with role === "admin" can access
+ * "operator"    → valid, authorized with role === "operator" can access
  *
- * @param to - Target route location
- * @param from - Current route location
+ * A route may combine roles, e.g. ["admin", "operator"] allows both.
+ *
+ * Redirects
+ * ─────────
+ * - Route not found                              → /log/404
+ * - No whoCanAccessThisRoute defined                      → /log/forbidden  (deny by default)
+ * - Authenticated user    → role home (/admin or /)
+ * - Unauthenticated user hits a protected route  → /auth/login
+ * - Authenticated but wrong role                 → /log/forbidden
+ *
+ * @param to   - Target route location
+ * @param _from - Current route location (unused)
  * @param next - Navigation guard next function
  */
 export const install = (
   to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
+  _from: RouteLocationNormalized,
   next: NavigationGuardNext,
 ): void => {
-  console.log("to", to);
-  console.log("from", from);
-
-  // Get authentication token and parse it
-  const appSetting = useAppSetting();
-  const parsedToken = appSetting.getParsedToken();
-  console.log("parsedToken", parsedToken);
-
-  // Determine if user is authenticated
-  const isAuthenticated = parsedToken !== null && parsedToken !== undefined;
-
-  // Extract user role from token (undefined if not authenticated)
-  const userRole: "admin" | "operator" | undefined = parsedToken?.role;
-  console.log("userRole", userRole);
-
-  // Get allowed roles from route meta
-  const meta = to.meta as IMeta;
-  console.log("meta", meta.whoCanAccessThisRoute);
-
-  const allowedRoles: IRole[] = meta.whoCanAccessThisRoute || [];
-  console.log("allowedRoles", allowedRoles);
-
-  if (to.matched.length == 0) {
+  // ── 1. Route existence check ──────────────────────────────────────────────
+  if (to.matched.length === 0) {
     next({ name: "/log/404" });
+    return;
   }
 
-  // If no access control is defined, deny access by default for security
+  // ── 2. Resolve current user state ─────────────────────────────────────────
+  const jwt = useAppJwt();
+
+  /**
+   * A user is considered "authenticated" only when:
+   *   - a payload exists (token was decoded successfully), AND
+   *   - the token is NOT expired
+   */
+  const isAuthenticated = !!jwt.payload && !jwt.isExpired;
+
+  /**
+   * Effective role:
+   *   - "guest"    → no token or expired token
+   *   - "admin"    → valid token with role admin
+   *   - "operator" → valid token with role operator
+   */
+  const userRole: AccessRole = isAuthenticated
+    ? (jwt.role as AccessRole)
+    : "guest";
+
+  // ── 3. Read route meta ────────────────────────────────────────────────────
+  const allowedRoles: AccessRole[] = to.meta.whoCanAccessThisRoute ?? [];
+
+  // No access control defined → deny by default (security-first)
   if (allowedRoles.length === 0) {
     next({ name: "/log/forbidden" });
     return;
   }
 
-  // Check if route allows public access
-  const isPublicRoute = allowedRoles.includes("public");
-  console.log("isPublicRoute", isPublicRoute);
-
-  if (isPublicRoute) {
+  // ── 4. Public routes ──────────────────────────────────────────────────────
+  // Everyone (authenticated or not) may access public routes.
+  if (allowedRoles.includes("public")) {
     next();
     return;
   }
 
-  // Check if route is for guests only (unauthenticated users)
-  const isGuestOnlyRoute = allowedRoles.includes("guest");
+  // ── 5. Guest-only routes (login, register, …) ─────────────────────────────
+  // A route is "guest-only" when it lists "guest" but no authenticated roles.
+  const hasAuthenticatedRoles = allowedRoles.some(
+    (r) => r === "admin" || r === "operator",
+  );
+  const isGuestOnlyRoute =
+    allowedRoles.includes("guest") && !hasAuthenticatedRoles;
+
   if (isGuestOnlyRoute) {
-    if (!isAuthenticated) {
-      // User is not authenticated, allow access
+    if (userRole === "guest") {
+      // Unauthenticated user → allow
       next();
       return;
-    } else {
-      // User is authenticated but trying to access guest-only route
-      // Redirect to forbidden page
-      next({ name: "/log/forbidden" });
+    }
+
+    // Authenticated user tried to open a guest-only page → redirect to home
+    if (userRole === "admin") {
+      next({ name: "/dashboard/admin" });
       return;
     }
-  }
 
-  // Check if route requires authentication (admin or operator)
-  const requiresAdmin = allowedRoles.includes("admin");
-  const requiresOperator = allowedRoles.includes("operator");
-
-  // If route requires authentication, check if user is authenticated
-  if (!isAuthenticated) {
-    // User is not authenticated but trying to access protected route
-    next({ name: "/log/forbidden" });
+    // operator (or any other authenticated role)
+    next({ name: "/" });
     return;
   }
 
-  // User is authenticated, check role-based access
-  if (requiresAdmin && userRole === "admin") {
-    // User is admin and route allows admin access
+  // ── 6. Protected routes (admin / operator) ────────────────────────────────
+  // Unauthenticated users must log in first.
+  if (userRole === "guest") {
+    next({ name: "/auth/login" });
+    return;
+  }
+
+  // Check whether the authenticated user's role is in the allowed list.
+  if (allowedRoles.includes(userRole)) {
     next();
     return;
   }
 
-  if (requiresOperator && userRole === "operator") {
-    // User is operator and route allows operator access
-    next();
-    return;
-  }
-
-  // If user role doesn't match any allowed role, deny access
+  // Authenticated but wrong role → forbidden
   next({ name: "/log/forbidden" });
 };
 

@@ -4,6 +4,9 @@ import { useHttp } from "../http";
 import _ from "lodash";
 import { computed, ref, watchEffect } from "vue";
 import type { AxiosError } from "axios";
+import { useAppToast } from "@/stores/application/toast";
+import { useAppJwt } from "@/stores/application/jwt";
+import { useRouter } from "vue-router";
 type IErrorShape = {};
 
 type IResponseSuccessShape<DATA> = {
@@ -22,6 +25,10 @@ export const useApi = <
     retry?: number | undefined;
   },
 ) => {
+  const appJwt = useAppJwt();
+  const appToast = useAppToast();
+  const router = useRouter();
+
   let cachedOptions: {
     body?: z.infer<CONFIG["request"]["body"]>;
     params?: z.infer<CONFIG["request"]["params"]>;
@@ -97,6 +104,25 @@ export const useApi = <
     },
     { immediate: false },
   );
+
+  method.onError((res) => {
+    console.log("error in api composable", res);
+    if (res.error.code == "ERR_NETWORK") {
+      appToast.service?.error({
+        title: res.error.message,
+        messages: [
+          "We’re unable to connect right now. Please check your connection and try again.",
+        ],
+        showTime: 6000,
+      });
+    }
+
+    if (res.error.status == 401) {
+      appJwt.logout(() => {
+        router.push("/log/authChecker");
+      });
+    }
+  });
 
   const reloadWithLastOptions = (loadFromCache?: boolean | undefined) => {
     method.send({
@@ -189,6 +215,12 @@ export const useApi = <
     return output as AxiosError<z.infer<CONFIG["response"]["error"]>>;
   });
 
+  const errorMessage = computed(() => {
+    if (error && "meesage" in error) {
+      return error.meesage;
+    }
+  });
+
   return {
     method,
     config,
@@ -199,5 +231,6 @@ export const useApi = <
       status: uploadStatus,
     },
     error,
+    errorMessage,
   };
 };

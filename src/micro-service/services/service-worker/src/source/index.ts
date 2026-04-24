@@ -1,17 +1,8 @@
-/// <reference lib="webworker" />
+import { useServiceWorker } from "./package";
 
-import utils from "./utils";
+const { handlers } = useServiceWorker();
 
-console.log("utils.testFunctions()", utils.testFunction());
-
-const sw = self as unknown as ServiceWorkerGlobalScope;
-
-sw.addEventListener("install", () => {
-  sw.skipWaiting();
-});
-
-sw.addEventListener("activate", () => {
-  sw.clients.claim();
-});
-
-export default { test: () => {} };
+handlers.install.handler();
+handlers.activate.handler();
+handlers.message.handler();
+handlers._fetch.handler();

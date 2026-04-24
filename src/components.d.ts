@@ -12,6 +12,10 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AuthLayout: typeof import('./components/layout/AuthLayout.vue')['default']
+    BcAppDisable: typeof import('./components/base/BcAppDisable.vue')['default']
+    BcCopyText: typeof import('./components/base/BcCopyText.vue')['default']
+    BcIcon: typeof import('./components/base/BcIcon.vue')['default']
+    BcTree: typeof import('./components/base/BcTree.vue')['default']
     FontProvider: typeof import('./components/provider/FontProvider.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

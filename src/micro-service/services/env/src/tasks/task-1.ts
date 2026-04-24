@@ -15,7 +15,7 @@ export default () => {
     const useDir = jetpack.path(tools.directories.public, "./env");
     Promise.all([
       jetpack.removeAsync(writeDir),
-      jetpack.removeAsync(useDir),
+      // jetpack.removeAsync(useDir),
     ]).then((res) => {
       log("removed files from 'writeDir' & 'useDir'");
       next();

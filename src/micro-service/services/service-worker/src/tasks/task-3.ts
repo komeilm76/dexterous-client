@@ -19,7 +19,9 @@ const makeRelativeFromStaticPath = (staticPath: string) => {
 export default () => {
   return tools.controller.makeMiddleware(async (config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro-service/service-worker/task-3]($)");
+    const { log } = tools.logger.instance(
+      "[micro-service/service-worker/task-3]($)",
+    );
     log("build start");
 
     // write Directory
@@ -41,9 +43,22 @@ export default () => {
     const relativeReadFilePath = makeRelativeFromStaticPath(staticReadFilePath);
 
     // use Directory
-    const useDir = jetpack.path(tools.directories.public, "service-worker");
+    const useDir = jetpack.path(tools.directories.public);
 
-    await jetpack.copyAsync(writedDir, useDir, { overwrite: true });
+    const workerContent = await jetpack.readAsync(
+      jetpack.path(writedDir, "index.global.js"),
+    );
+    if (workerContent) {
+      jetpack.writeAsync(
+        jetpack.path(useDir, "service-worker.js"),
+        workerContent,
+      );
+    }
+    // await jetpack.copyAsync(writedDir, useDir, { overwrite: true });
+    // await jetpack.rename(
+    //   jetpack.path(useDir, "index.global.js"),
+    //   "service-worker.js",
+    // );
 
     tools.watcher.watchFiles(
       [relativeReadFilePath],

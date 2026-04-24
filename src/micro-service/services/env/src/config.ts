@@ -2,6 +2,7 @@ import kmTraversal from "km-traversal";
 import z from "zod";
 import type { IConfig } from "./schema";
 import schema from "./schema";
+import { v4 } from "uuid";
 
 const config: IConfig = {
   data: {
@@ -28,6 +29,8 @@ const config: IConfig = {
         },
       },
     },
+    appVersion: import.meta.env.VITE_APP_VERSION || "0.0.0",
+    buildHash: import.meta.env.VITE_BUILD_HASH || v4(),
   },
   schema: schema.config,
 };

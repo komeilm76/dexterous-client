@@ -6,7 +6,7 @@ import type { IConfig } from "../schemas";
 export default () => {
   return tools.controller.makeMiddleware<IConfig>(async (config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro-service/icon]($)");
+    const { log } = tools.logger.instance("[micro-service/icon/task-1]($)");
     // -----------------------------------------
     // file name
     const fileName = "icon-fonts.ts";

@@ -9,10 +9,7 @@ export default () => {
     const { log } = tools.logger.instance("[micro-service/env/task-5]($)");
     // -----------------------------------------
     // Write Directory
-    const writeDir = jetpack.path(
-      tools.directories.microModules,
-      "./env",
-    );
+    const writeDir = jetpack.path(tools.directories.microModules, "./env");
     // Use Directory
     const useDir = jetpack.path(tools.directories.public, "./env");
 

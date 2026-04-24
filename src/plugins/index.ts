@@ -8,6 +8,7 @@ import icon from "./icon";
 import motion from "./motion";
 import pinia from "./pinia";
 import router from "./router";
+import serviceWorker from "./service-worker";
 import tailwind from "./tailwind";
 import vuetify from "./vuetify";
 export default {
@@ -17,4 +18,5 @@ export default {
   tailwind,
   motion,
   icon,
+  serviceWorker,
 };

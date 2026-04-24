@@ -167,12 +167,22 @@
         "language"
       ],
       "additionalProperties": false
+    },
+    "appVersion": {
+      "default": "0.0.0",
+      "type": "string"
+    },
+    "buildHash": {
+      "default": "base-hash",
+      "type": "string"
     }
   },
   "required": [
     "$schema",
     "baseUrl",
-    "setting"
+    "setting",
+    "appVersion",
+    "buildHash"
   ],
   "additionalProperties": false
 }

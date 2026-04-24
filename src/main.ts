@@ -17,22 +17,23 @@ import { createApp } from "vue";
 import "unfonts.css";
 
 import { loadEnvs } from "./composables/env";
+import tools from "./tools";
 
 const runApplication = async () => {
   const envs = await loadEnvs();
   const app = createApp(App);
   app.provide("envs", envs);
-  plugins.pinia.install(app);
-  plugins.router.install(app);
-  await plugins.tailwind.install();
   plugins.vuetify.install(app);
+  await tools.time.wait(100);
+  plugins.pinia.install(app);
+  await tools.time.wait(100);
+  plugins.router.install(app);
   plugins.motion.install(app);
+  await tools.time.wait(100);
   await plugins.icon.install();
+  await plugins.tailwind.install();
   app.mount("#app");
+  // await plugins.serviceWorker.install(envs, app);
 };
 
 await runApplication();
-
-navigator.serviceWorker.register("/service-worker/index.global.js", {
-  type: "module",
-});

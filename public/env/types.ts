@@ -15,4 +15,6 @@ export type EnvConfig = {
             };
         };
     };
+    appVersion: string;
+    buildHash: string;
 };

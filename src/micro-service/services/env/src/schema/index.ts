@@ -47,6 +47,8 @@ const configSchema = z.object({
       languages: languagesSchema,
     }),
   }),
+  appVersion: z.string().default("0.0.0"),
+  buildHash: z.string().default("base-hash"),
 });
 
 // config type

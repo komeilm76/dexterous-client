@@ -13,6 +13,11 @@ export type JwtPayload = {
 };
 
 /**
+ * All possible roles including guest (unauthenticated)
+ */
+export type UserRole = "admin" | "operator" | "guest";
+
+/**
  * Options for useJWT composable
  */
 export interface UseJwtOptions {
@@ -77,7 +82,7 @@ export const useJWT = (options: UseJwtOptions = {}) => {
         atob(base64)
           .split("")
           .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-          .join(""),
+          .join("")
       );
       return JSON.parse(decoded);
     } catch {
@@ -116,17 +121,33 @@ export const useJWT = (options: UseJwtOptions = {}) => {
   });
 
   /**
+   * Current user role.
+   * Returns "guest" when payload is absent (unauthenticated).
+   */
+  const role = computed<UserRole>(() => {
+    if (!_payload.value) return "guest";
+    return _payload.value.role ?? "guest";
+  });
+
+  /**
+   * Check if user is a guest (no valid payload / unauthenticated)
+   */
+  const isGuest = computed(() => {
+    return role.value === "guest";
+  });
+
+  /**
    * Check if user has admin role
    */
   const isAdmin = computed(() => {
-    return _payload.value?.role === "admin";
+    return role.value === "admin";
   });
 
   /**
    * Check if user has operator role
    */
   const isOperator = computed(() => {
-    return _payload.value?.role === "operator";
+    return role.value === "operator";
   });
 
   /**
@@ -193,16 +214,18 @@ export const useJWT = (options: UseJwtOptions = {}) => {
    * Login with token
    * Shortcut for setToken
    */
-  const login = (token: string) => {
+  const login = (token: string, cb?: () => void) => {
     setToken(token);
+    cb && cb();
   };
 
   /**
    * Logout
    * Shortcut for clearToken
    */
-  const logout = () => {
+  const logout = (cb?: () => void) => {
     clearToken();
+    cb && cb();
   };
 
   /**
@@ -223,6 +246,8 @@ export const useJWT = (options: UseJwtOptions = {}) => {
     payload: computed(() => _payload.value),
 
     // Computed
+    role,
+    isGuest,
     isExpired,
     expiresIn,
     isAdmin,

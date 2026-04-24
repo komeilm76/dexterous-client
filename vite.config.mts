@@ -76,11 +76,11 @@ export default defineConfig({
           //   weights: [400],
           //   styles: ["normal"],
           // },
-          // {
-          //   name: "Caveat",
-          //   weights: [400, 500, 600, 700],
-          //   styles: ["normal"],
-          // },
+          {
+            name: "Caveat",
+            weights: [400, 500, 600, 700],
+            styles: ["normal"],
+          },
         ],
       },
     }),

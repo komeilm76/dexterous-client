@@ -84,6 +84,7 @@ export const useAppSetting = defineStore(
         return `${paletteKey}-${themeModeKey}` as const;
       }
     });
+    const clearCacheDialog = ref(false);
 
     const getParsedToken = () => {
       return useAppJwt().payload || undefined;
@@ -144,6 +145,7 @@ export const useAppSetting = defineStore(
       statics: _statics,
       defaults: _defaults,
       getParsedToken,
+      clearCacheDialog,
     };
   },
   {

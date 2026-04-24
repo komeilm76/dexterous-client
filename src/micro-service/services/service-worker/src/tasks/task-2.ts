@@ -18,7 +18,9 @@ const makeRelativeFromStaticPath = (staticPath: string) => {
 export default () => {
   return tools.controller.makeMiddleware(async (config, next) => {
     // log
-    const { log } = tools.logger.instance("[micro-service/service-worker/task-2]($)");
+    const { log } = tools.logger.instance(
+      "[micro-service/service-worker/task-2]($)",
+    );
     log("build start");
 
     // read Directory
@@ -71,10 +73,9 @@ export default () => {
         {
           entry: [relativeReadFilePath],
           outDir: relativeWriteDirPath,
-
           format: ["iife"], // Browser-safe SW format
           splitting: false, // Required for Service Worker
-          sourcemap: true,
+          sourcemap: false, // map file
           clean: true,
           minify: false,
 

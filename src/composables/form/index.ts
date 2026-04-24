@@ -1,68 +1,160 @@
-import { z, ZodArray, ZodNullable, type ZodObject, type output } from "zod";
+import {
+  z,
+  ZodArray,
+  ZodNullable,
+  ZodObject,
+  ZodOptional,
+  type output,
+} from "zod/v4";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useField, useFieldArray, useForm } from "vee-validate";
-import { computed } from "vue";
-import { isEmpty } from "lodash";
-export const makeForm = <SCHEMA extends ZodObject>(
+import { computed, reactive, ref } from "vue";
+import _ from "lodash";
+
+const isZodArray = (type: any): type is ZodArray<any> => {
+  if (type instanceof ZodArray) return true;
+  if (type instanceof ZodNullable && type.unwrap() instanceof ZodArray)
+    return true;
+  if (type instanceof ZodOptional && type.unwrap() instanceof ZodArray)
+    return true;
+  return false;
+};
+
+type UnwrapZodArray<T> =
+  T extends z.ZodArray<infer U>
+    ? U
+    : T extends z.ZodNullable<infer N>
+      ? N extends z.ZodArray<infer U>
+        ? U
+        : never
+      : T extends z.ZodOptional<infer O>
+        ? O extends z.ZodArray<infer U>
+          ? U
+          : never
+        : never;
+
+type InferZodValueType<T> = T extends z.ZodTypeAny ? z.infer<T> : never;
+
+export type DYN_OUTPUT<SCHEMA extends ZodObject> = {
+  [K in keyof SCHEMA["shape"]]: SCHEMA["shape"][K] extends z.ZodArray<any>
+    ? ReturnType<
+        typeof useFieldArray<
+          InferZodValueType<UnwrapZodArray<SCHEMA["shape"][K]>>
+        >
+      >
+    : SCHEMA["shape"][K] extends z.ZodNullable<z.ZodArray<any>>
+      ? ReturnType<
+          typeof useFieldArray<
+            InferZodValueType<UnwrapZodArray<SCHEMA["shape"][K]>>
+          >
+        >
+      : ReturnType<typeof useField<InferZodValueType<SCHEMA["shape"][K]>>>;
+};
+
+export const makeForm = <
+  SCHEMA extends ZodObject,
+  VALUES extends z.infer<SCHEMA> = z.infer<SCHEMA>,
+  KEY extends keyof VALUES = keyof VALUES,
+  OUTPUT extends { [key in KEY]: ReturnType<typeof useField<VALUES[key]>> } = {
+    [key in KEY]: ReturnType<typeof useField<VALUES[key]>>;
+  },
+  DYN_OUTPUT extends {
+    [K in keyof SCHEMA["shape"]]: SCHEMA["shape"][K] extends z.ZodArray<any>
+      ? ReturnType<
+          typeof useFieldArray<
+            InferZodValueType<UnwrapZodArray<SCHEMA["shape"][K]>>
+          >
+        >
+      : SCHEMA["shape"][K] extends z.ZodNullable<z.ZodArray<any>>
+        ? ReturnType<
+            typeof useFieldArray<
+              InferZodValueType<UnwrapZodArray<SCHEMA["shape"][K]>>
+            >
+          >
+        : SCHEMA["shape"][K] extends z.ZodOptional<z.ZodArray<any>>
+          ? ReturnType<
+              typeof useFieldArray<
+                InferZodValueType<UnwrapZodArray<SCHEMA["shape"][K]>>
+              >
+            >
+          : ReturnType<typeof useField<InferZodValueType<SCHEMA["shape"][K]>>>;
+  } = {
+    [K in keyof SCHEMA["shape"]]: SCHEMA["shape"][K] extends z.ZodArray<any>
+      ? ReturnType<
+          typeof useFieldArray<
+            InferZodValueType<UnwrapZodArray<SCHEMA["shape"][K]>>
+          >
+        >
+      : SCHEMA["shape"][K] extends z.ZodNullable<z.ZodArray<any>>
+        ? ReturnType<
+            typeof useFieldArray<
+              InferZodValueType<UnwrapZodArray<SCHEMA["shape"][K]>>
+            >
+          >
+        : SCHEMA["shape"][K] extends z.ZodOptional<z.ZodArray<any>>
+          ? ReturnType<
+              typeof useFieldArray<
+                InferZodValueType<UnwrapZodArray<SCHEMA["shape"][K]>>
+              >
+            >
+          : ReturnType<typeof useField<InferZodValueType<SCHEMA["shape"][K]>>>;
+  },
+>(
   schema: SCHEMA,
   initialValues?: Partial<z.infer<SCHEMA>>,
 ) => {
   const formSchema = toTypedSchema(schema);
-  const form = useForm({
+  const form = useForm<z.infer<SCHEMA>>({
     validationSchema: formSchema,
     // @ts-ignore
     initialValues,
   });
 
-  const list = schema.keyof().options as string[];
-  const fields = {} as {
-    [key in keyof SCHEMA["shape"]]: ReturnType<
-      typeof useField<z.infer<SCHEMA["shape"][key]>>
-    >;
-  };
-  const arrayFields = {} as {
-    [key in keyof SCHEMA["shape"]]: ReturnType<
-      typeof useFieldArray<z.infer<SCHEMA["shape"][key]["element"]>>
-    >;
-  };
-  list.forEach((field) => {
-    if (schema.shape[field] instanceof ZodNullable) {
-      if (schema.shape[field]._def.innerType instanceof ZodArray) {
-        const fieldObj = useFieldArray(field);
-        // @ts-ignore
-        arrayFields[field] = fieldObj;
-      } else {
-        const fieldObj = useField(field);
-        // @ts-ignore
-        fields[field] = fieldObj.value;
-      }
-    }
-    if (schema.shape[field] instanceof ZodArray) {
-      const fieldObj = useFieldArray(field);
-      // @ts-ignore
-      arrayFields[field] = fieldObj;
+  // @ts-ignore
+  const fields = ref<DYN_OUTPUT>({});
+
+  const fieldKeys = schema.keyof().options as SCHEMA["shape"];
+  for (const field in fieldKeys) {
+    const key = fieldKeys[field];
+    if (isZodArray(schema.shape[key]) == true) {
+      fields.value[key] = useFieldArray(key);
     } else {
-      const fieldObj = useField(field);
-      // @ts-ignore
-      fields[field] = fieldObj.value;
+      fields.value[key] = useField(key);
     }
-  });
+  }
+
   const isValidForm = computed(() => {
-    return isEmpty(form.errors.value) == true ? true : false;
+    return _.isEmpty(form.errors.value) == true ? true : false;
   });
   const submitForm = (onValid: (values: output<SCHEMA>) => void) => {
     return form.handleSubmit((values, ctx) => {
-      onValid(values);
+      onValid(values as output<SCHEMA>);
     })();
   };
 
   return {
+    form,
     fields,
-    ...form,
-    isValidForm,
     rawSchema: schema,
     formSchema,
+    isValidForm,
     submitForm,
-    arrayFields,
   };
 };
+
+const schema = z.object({
+  name: z.string(),
+  age: z.number(),
+  skills: z
+    .object({
+      name: z.string(),
+      score: z.number(),
+    })
+    .array(),
+});
+
+const form = makeForm(schema, {});
+
+form.fields.value.age.value;
+form.fields.value.name.value;
+form.fields.value.skills.insert(1, { name: "", score: 0 });

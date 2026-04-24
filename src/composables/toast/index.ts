@@ -4,8 +4,8 @@ import { v4 as uuidV4 } from "uuid";
 import { computed, ref, watch } from "vue";
 import z from "zod";
 import { useCountdown } from "@vueuse/core";
-import { useAppToast } from "@/stores/application/toast";
 import tools from "@/tools";
+import { useAppToast } from "@/stores/application/toast";
 
 /**
  * Schema for toast notification types
@@ -82,6 +82,8 @@ const entryToast = z.object({
       }),
     )
     .optional(),
+  onFinished: z.function().optional(),
+  onActivated: z.function().optional(),
   location: locationSchema.partial().optional(),
   color: z.string().optional(),
   type: toastType.optional(),
@@ -129,6 +131,11 @@ const _makeToast = <ENTRY_TOAST extends IEntryToast>(
 
   const status = ref<"not-started" | "active" | "finished">("not-started");
   const saveStatus = ref<boolean>(false);
+
+  const onFinished =
+    entryToast.onFinished !== undefined ? entryToast.onFinished : () => {};
+  const onActivated =
+    entryToast.onActivated !== undefined ? entryToast.onActivated : () => {};
 
   const {
     start: _start,
@@ -203,6 +210,7 @@ const _makeToast = <ENTRY_TOAST extends IEntryToast>(
     ...entryToast,
     id: uuidV4(),
     createdOn: new Date(),
+    onFinished,
     actions: outputActions,
     saveToastInHistory: () => {
       if (canSave) {
@@ -251,6 +259,12 @@ const _makeToast = <ENTRY_TOAST extends IEntryToast>(
     if (n == "active") {
       await tools.time.wait(data.showMessageDelay);
       showMessagesTime.value = true;
+    }
+    if (n == "finished") {
+      onFinished();
+    }
+    if (n == "active") {
+      onActivated();
     }
   });
   const canShowMessageList = computed(() => {
@@ -535,5 +549,71 @@ export const makeToastService = (
     });
     return _.takeRight(finishedList, 200);
   });
-  return { show, activeList, notStartedList, finishedList };
+
+  // error toast
+  const error = <ENTRY_TOAST extends Omit<IEntryToast, "type">>(
+    entryToast: ENTRY_TOAST,
+  ) => {
+    return show({
+      ...entryToast,
+      type: "error",
+      canPause: false,
+      canSave: true,
+      closable: false,
+      showTime: 4000,
+      showMessageDelay: 300,
+    });
+  };
+  // warning toast
+  const warning = <ENTRY_TOAST extends Omit<IEntryToast, "type">>(
+    entryToast: ENTRY_TOAST,
+  ) => {
+    return show({
+      ...entryToast,
+      type: "warning",
+      canPause: true,
+      canSave: false,
+      closable: true,
+      showTime: 4000,
+      showMessageDelay: 0,
+    });
+  };
+
+  const info = <ENTRY_TOAST extends Omit<IEntryToast, "type">>(
+    entryToast: ENTRY_TOAST,
+  ) => {
+    return show({
+      ...entryToast,
+      type: "info",
+      canPause: true,
+      canSave: false,
+      closable: false,
+      showTime: 4000,
+      showMessageDelay: 0,
+    });
+  };
+
+  const success = <ENTRY_TOAST extends Omit<IEntryToast, "type">>(
+    entryToast: ENTRY_TOAST,
+  ) => {
+    return show({
+      ...entryToast,
+      type: "success",
+      canPause: false,
+      canSave: false,
+      closable: false,
+      showTime: 4000,
+      showMessageDelay: 0,
+    });
+  };
+  return {
+    show,
+    error,
+    warning,
+    info,
+    success,
+    activeList,
+    notStartedList,
+    finishedList,
+  };
 };

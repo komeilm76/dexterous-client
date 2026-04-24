@@ -15,3 +15,4 @@ tools.controller.middlewareController<IConfig>(config, [
   task4(),
   task5(),
 ]);
+ 

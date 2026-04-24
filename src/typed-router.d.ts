@@ -24,11 +24,13 @@ declare module 'vue-router/auto-routes' {
     '/auth/login': RouteRecordInfo<'/auth/login', '/auth/login', Record<never, never>, Record<never, never>>,
     '/auth/register': RouteRecordInfo<'/auth/register', '/auth/register', Record<never, never>, Record<never, never>>,
     '/dashboard/': RouteRecordInfo<'/dashboard/', '/dashboard', Record<never, never>, Record<never, never>>,
+    '/dashboard/admin': RouteRecordInfo<'/dashboard/admin', '/dashboard/admin', Record<never, never>, Record<never, never>, '/dashboard/admin/'>,
     '/dashboard/admin/': RouteRecordInfo<'/dashboard/admin/', '/dashboard/admin', Record<never, never>, Record<never, never>>,
     '/dashboard/operator/': RouteRecordInfo<'/dashboard/operator/', '/dashboard/operator', Record<never, never>, Record<never, never>>,
     '/example': RouteRecordInfo<'/example', '/example', Record<never, never>, Record<never, never>>,
-    '/log': RouteRecordInfo<'/log', '/log', Record<never, never>, Record<never, never>, '/log/404' | '/log/forbidden'>,
+    '/log': RouteRecordInfo<'/log', '/log', Record<never, never>, Record<never, never>, '/log/404' | '/log/authChecker' | '/log/forbidden'>,
     '/log/404': RouteRecordInfo<'/log/404', '/log/404', Record<never, never>, Record<never, never>>,
+    '/log/authChecker': RouteRecordInfo<'/log/authChecker', '/log/authChecker', Record<never, never>, Record<never, never>>,
     '/log/forbidden': RouteRecordInfo<'/log/forbidden', '/log/forbidden', Record<never, never>, Record<never, never>>,
   }
 
@@ -67,6 +69,10 @@ declare module 'vue-router/auto-routes' {
       routes: '/dashboard/'
       views: never
     }
+    'src/pages/dashboard/admin.vue': {
+      routes: '/dashboard/admin' | '/dashboard/admin/'
+      views: 'default'
+    }
     'src/pages/dashboard/admin/index.vue': {
       routes: '/dashboard/admin/'
       views: never
@@ -80,11 +86,15 @@ declare module 'vue-router/auto-routes' {
       views: never
     }
     'src/pages/log.vue': {
-      routes: '/log' | '/log/404' | '/log/forbidden'
+      routes: '/log' | '/log/404' | '/log/authChecker' | '/log/forbidden'
       views: 'default'
     }
     'src/pages/log/404.vue': {
       routes: '/log/404'
+      views: never
+    }
+    'src/pages/log/authChecker.vue': {
+      routes: '/log/authChecker'
       views: never
     }
     'src/pages/log/forbidden.vue': {

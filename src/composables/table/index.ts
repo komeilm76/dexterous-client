@@ -4,10 +4,13 @@ import type { DataTableHeader } from "vuetify";
 import type { ItemType } from "vuetify/lib/components/VDataTable/VDataTableServer.mjs";
 import type { ZodObject, z } from "zod";
 
+type ISortBy = { key: string; order: "asc" | "desc" };
+
+
 export type IOnUpdateTableOptions = {
   page: 1;
   itemsPerPage: 10;
-  sortBy: [];
+  sortBy: ISortBy[];
   groupBy: [];
   hasMore: boolean;
 };
