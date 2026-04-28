@@ -75,14 +75,26 @@
   ],
   "screenshots": [
     {
-      "src": "/pwa/screenshots/screenshot-1-1823x860_wide.png",
-      "sizes": "1823x860",
+      "src": "/pwa/screenshots/screenshot-1-2732x2048_wide.png",
+      "sizes": "2732x2048",
       "form_factor": "wide",
       "type": "image/png"
     },
     {
-      "src": "/pwa/screenshots/screenshot-2-750x1334_narrow.png",
-      "sizes": "750x1334",
+      "src": "/pwa/screenshots/screenshot-2-2732x2048_wide.png",
+      "sizes": "2732x2048",
+      "form_factor": "wide",
+      "type": "image/png"
+    },
+    {
+      "src": "/pwa/screenshots/screenshot-3-1290x2796_narrow.png",
+      "sizes": "1290x2796",
+      "form_factor": "narrow",
+      "type": "image/png"
+    },
+    {
+      "src": "/pwa/screenshots/screenshot-4-1290x2796_narrow.png",
+      "sizes": "1290x2796",
       "form_factor": "narrow",
       "type": "image/png"
     }
