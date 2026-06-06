@@ -24,6 +24,7 @@ declare module 'vue-router/auto-routes' {
     '/auth/login': RouteRecordInfo<'/auth/login', '/auth/login', Record<never, never>, Record<never, never>>,
     '/auth/register': RouteRecordInfo<'/auth/register', '/auth/register', Record<never, never>, Record<never, never>>,
     '/dashboard/': RouteRecordInfo<'/dashboard/', '/dashboard', Record<never, never>, Record<never, never>>,
+    '/dashboard/[test_id]/': RouteRecordInfo<'/dashboard/[test_id]/', '/dashboard/:test_id', { test_id: ParamValue<true> }, { test_id: ParamValue<false> }>,
     '/dashboard/admin': RouteRecordInfo<'/dashboard/admin', '/dashboard/admin', Record<never, never>, Record<never, never>, '/dashboard/admin/'>,
     '/dashboard/admin/': RouteRecordInfo<'/dashboard/admin/', '/dashboard/admin', Record<never, never>, Record<never, never>>,
     '/dashboard/operator/': RouteRecordInfo<'/dashboard/operator/', '/dashboard/operator', Record<never, never>, Record<never, never>>,
@@ -67,6 +68,10 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/dashboard/index.vue': {
       routes: '/dashboard/'
+      views: never
+    }
+    'src/pages/dashboard/[test_id]/index.vue': {
+      routes: '/dashboard/[test_id]/'
       views: never
     }
     'src/pages/dashboard/admin.vue': {

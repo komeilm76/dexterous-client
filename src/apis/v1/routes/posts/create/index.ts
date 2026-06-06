@@ -22,9 +22,9 @@ const apiSchema = makeApiConfig({
     cookies: z.object({}),
   },
   response: {
-    201: makeResponseSuccessShape(components.post.postSchema, "post").item(),
-    400: components.common.errorSchema,
-    401: components.common.errorSchema,
+    '201': makeResponseSuccessShape(components.post.postSchema, "post").item(),
+    '400': components.common.errorSchema,
+    '401': components.common.errorSchema,
   },
 });
 

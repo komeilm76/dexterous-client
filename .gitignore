@@ -1,4 +1,5 @@
 .DS_Store
+src/micro-modules/
 node_modules
 /dist
 
