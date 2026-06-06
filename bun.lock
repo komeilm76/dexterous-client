@@ -1,6 +1,5 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 1,
   "workspaces": {
     "": {
       "name": "dexterous-client",
@@ -23,7 +22,7 @@
         "axios": "^1.12.2",
         "chalk": "^5.6.2",
         "https-localhost": "^4.7.1",
-        "km-api": "^0.2.1",
+        "km-api": "^0.3.1",
         "km-icon": "^0.0.19",
         "km-list": "^0.0.7",
         "km-manifest": "^0.0.5",
@@ -961,7 +960,7 @@
 
     "klona": ["klona@2.0.6", "", {}, "sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA=="],
 
-    "km-api": ["km-api@0.2.1", "", { "dependencies": { "km-type": "^0.0.6" }, "peerDependencies": { "zod": "^4.3.6" } }, "sha512-6RnSWBuvfTKsbsDw203ZraTubydhW15J7RQMYbHU4oEQClqBCh69pcMUGo5+cgFVkN5zfz+5MxRbqa5ot3/kpg=="],
+    "km-api": ["km-api@0.3.1", "", { "peerDependencies": { "zod": "^4.3.6" } }, "sha512-QczpdZ8wGug+QVPQIfxkEMnf9WA8JUo8b2NSNl5W7Ag8Bf0/yBswhOvRhoPavq8JYQRZf7jdq9bZ3WoM/IowHQ=="],
 
     "km-fresh": ["km-fresh@0.2.12", "", { "dependencies": { "@types/node": "^22.5.5", "cross-env": "^7.0.3" } }, "sha512-HKMdvLvpovlAfcwz8qHEEn5erQbDBVzJ1YvZbUS8GsIpyOPP2sowpKd7lOXCZENklymIRehxTPQvw69rNRpu3g=="],
 
@@ -978,8 +977,6 @@
     "km-storage": ["km-storage@0.3.0", "", { "dependencies": { "@types/node": "^22.5.5", "cross-env": "^7.0.3", "lodash": "^4.17.21", "zipson": "^0.2.12", "zod": "^3.23.8" } }, "sha512-D5G5x4+33KpUh7YIsd+EpX4fOAHuI42dRO7U56vAjTx5/73BdD+TejyRmS1BlC26TD8pmY9gj9DXsrp69yUBeg=="],
 
     "km-traversal": ["km-traversal@1.1.8", "", { "dependencies": { "@types/node": "^22.5.5", "cross-env": "^7.0.3", "jsonrepair": "^3.13.0" } }, "sha512-A8aF4S2n5Z2gjnxgC1NzfGZykJKKyHHulBxsCM/N5QuZi00FJBaw2khYk/5dAIAk53xQemRHQfOLT+FiQUhxfA=="],
-
-    "km-type": ["km-type@0.0.6", "", { "dependencies": { "@types/node": "^22.5.5", "cross-env": "^7.0.3", "rxjs": "^7.8.2" } }, "sha512-YIipZ5E1EYnQiQY80auXrswAbcra04TnWVaaVjIJC9THgBMf6Hsl1M3Bs40Z721hwqiawh8th1LGRue81RILcw=="],
 
     "km-worker": ["km-worker@0.0.3", "", { "dependencies": { "@types/node": "^22.5.5", "chalk": "^5.4.1", "cross-env": "^7.0.3", "km-list": "^0.0.7", "lodash": "^4.17.21" } }, "sha512-UKaCUUPOAm37i7qh0SOzaL4A82RAjT4I1ecnl9i0DST1MsLmAEzmly+yvRGx7NiravaWp+pUsbI985PykC9onQ=="],
 

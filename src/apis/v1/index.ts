@@ -1,9 +1,7 @@
-import config from "./config";
-
-export interface ApiConfig {
-  config: typeof config;
-}
+import components from "./components";
+import routes from "./routes";
 
 export default {
-  config,
-} as ApiConfig;
+  components,
+  routes,
+};

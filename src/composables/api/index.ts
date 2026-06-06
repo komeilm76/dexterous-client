@@ -1,12 +1,12 @@
 import { z, ZodObject } from "zod";
-import { kmApi } from "km-api";
 import { useHttp } from "../http";
 import _ from "lodash";
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
 import type { AxiosError } from "axios";
 import { useAppToast } from "@/stores/application/toast";
 import { useAppJwt } from "@/stores/application/jwt";
 import { useRouter } from "vue-router";
+import { convertResponseType, makeApiConfig } from "km-api";
 type IErrorShape = {};
 
 type IResponseSuccessShape<DATA> = {
@@ -15,15 +15,13 @@ type IResponseSuccessShape<DATA> = {
   statusText: string;
 };
 
-export const useApi = <
-  CONFIG extends ReturnType<typeof kmApi.v4.makeApiConfig>,
->(
+type IHttpOptions = {
+  cacheTime: number;
+};
+
+export const useApi = <CONFIG extends ReturnType<typeof makeApiConfig>>(
   config: CONFIG,
-  http_options: (v: CONFIG) => {
-    cacheTime?: number | undefined;
-    limit?: number | undefined;
-    retry?: number | undefined;
-  },
+  http_options: (v: CONFIG) => Partial<IHttpOptions> | void,
 ) => {
   const appJwt = useAppJwt();
   const appToast = useAppToast();
@@ -56,7 +54,15 @@ export const useApi = <
       headers?: z.infer<CONFIG["request"]["headers"]>;
       loadFromCache?: boolean | undefined;
     }) => {
-      const cacheTime = http_options(config).cacheTime;
+      console.log("requestConfig", requestConfig);
+
+      const httpEntryOptions = http_options(config);
+      const httpDefaultOptions: IHttpOptions = { cacheTime: 0 };
+      const httpFinalyOptions: IHttpOptions = {
+        ...httpDefaultOptions,
+        ...(typeof httpEntryOptions == "object" && httpEntryOptions),
+      };
+      const cacheTime = httpFinalyOptions.cacheTime;
       cachedOptions = {
         body: requestConfig.body,
         params: requestConfig.params,
@@ -73,13 +79,13 @@ export const useApi = <
         });
       }
 
-      const adapterResponseType = kmApi.adapters.convertResponseType(
+      const adapterResponseType = convertResponseType(
         config.responseContentType || "application/json",
         "alova-axios",
       );
 
       return http.Request<
-        IResponseSuccessShape<z.infer<CONFIG["response"]["success"]>>
+        IResponseSuccessShape<z.infer<CONFIG["response"][200]>>
       >({
         url: config.makeFullPath(requestConfig.params || {}),
         method: config.method,
@@ -88,7 +94,7 @@ export const useApi = <
         },
         data: requestConfig.body as unknown as any,
         ...(requestConfig.query
-          ? { params: requestConfig.params }
+          ? { params: requestConfig.query }
           : { params: {} }),
         ...(requestConfig.headers && { headers: requestConfig.headers as any }),
         ...(adapterResponseType.responseType && {
@@ -212,7 +218,7 @@ export const useApi = <
 
   const error = computed(() => {
     const output = method.error.value;
-    return output as AxiosError<z.infer<CONFIG["response"]["error"]>>;
+    return output as AxiosError<z.infer<CONFIG["response"][400]>>;
   });
 
   const errorMessage = computed(() => {
@@ -220,12 +226,25 @@ export const useApi = <
       return error.meesage;
     }
   });
+  const _data = ref<IResponseSuccessShape<z.infer<CONFIG["response"][200]>>>();
+  watch(method.data, (n, o) => {
+    console.log(n);
+    _data.value = n.data as IResponseSuccessShape<
+      z.infer<CONFIG["response"][200]>
+    >;
+  });
+
+  const getRequestLastOptions = () => {
+    return cachedOptions;
+  };
 
   return {
     method,
+    _data,
     config,
     reloadWithLastOptions,
     reloadWithFirstOptions,
+    getRequestLastOptions,
     uploadData: {
       info: uploadInfo,
       status: uploadStatus,
