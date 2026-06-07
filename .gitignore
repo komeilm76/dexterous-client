@@ -1,6 +1,7 @@
 .DS_Store
 src/micro-modules/
 node_modules
+bun.lock
 /dist
 
 # local env files

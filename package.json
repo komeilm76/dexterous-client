@@ -2,7 +2,7 @@
   "name": "dexterous-client",
   "private": true,
   "type": "module",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "generate-env": "bun --env-file=.env.production ./src/micro-service/services/env/src/index.ts",
     "generate-env:watch": "bun --watch --env-file=.env.production ./src/micro-service/services/env/src/index.ts",
